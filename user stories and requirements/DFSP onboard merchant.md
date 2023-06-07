@@ -1,8 +1,8 @@
 
-##User Story:  
+## User Story:  
 **As** a DFSP system admin I **want to** add small merchants in merchant registry system **so that** they can be included in mojaloop system.
 
-##Acceptance Criteria:
+## Acceptance Criteria:
 * Merchant Full KYB information is stored in the Merchant Acquirer System Portal.
 * The DFSP extracts the necessary merchant data from the merchant acquirer system to submit to merchant registry.
     - ** to define necessary data to upload in merchant registry module **
@@ -34,3 +34,4 @@
 
 
 [sequence diagram](https://github.com/mojaloop/merchant-payment-docs/blob/master/DFSP%20merchant%20onboard%20Sequence%20Diagram.md)
+
