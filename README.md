@@ -1,2 +1,1 @@
-test
-test
+We will be using this Repo to keep updating the documents for merchant registry workstream
