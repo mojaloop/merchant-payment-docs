@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-06-08T10:00:28.911Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="PHBoxzFP324SGvkqEPHQ" version="21.3.7" type="google">
+<mxfile host="app.diagrams.net" modified="2023-06-08T10:21:25.606Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="zUszEP9sjJumhVx_J1LB" version="21.3.7" type="google">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
     <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
@@ -28,7 +28,7 @@
             <mxRectangle width="30" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="C-vyLk0tnHw3VtMMgP7b-29" value="dba_trading_name: VARCHAR(255) (Not Null)" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;" vertex="1" parent="C-vyLk0tnHw3VtMMgP7b-27">
+        <mxCell id="C-vyLk0tnHw3VtMMgP7b-29" value="dba_trading_name: VARCHAR(255) (Nullable)" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=#dae8fc;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;strokeColor=#6c8ebf;" vertex="1" parent="C-vyLk0tnHw3VtMMgP7b-27">
           <mxGeometry x="30" width="485" height="30" as="geometry">
             <mxRectangle width="485" height="30" as="alternateBounds" />
           </mxGeometry>
@@ -41,7 +41,7 @@
             <mxRectangle width="30" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="FKtlqES2YTKg1XEckP9--6" value="registered_name:  VARCHAR(255) (Not Null)" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;" vertex="1" parent="FKtlqES2YTKg1XEckP9--4">
+        <mxCell id="FKtlqES2YTKg1XEckP9--6" value="registered_name:  VARCHAR(255) (Nullable)" style="shape=partialRectangle;overflow=hidden;connectable=0;fillColor=#dae8fc;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;strokeColor=#6c8ebf;" vertex="1" parent="FKtlqES2YTKg1XEckP9--4">
           <mxGeometry x="30" width="485" height="30" as="geometry">
             <mxRectangle width="485" height="30" as="alternateBounds" />
           </mxGeometry>
