@@ -32,7 +32,9 @@ A DFSP will onboard their Merchant into a Central Merchant Registry via API/port
 
 The working assumption is that the merchant Know your Business (KYB) process is manual, however the system can consider this being done automatically in a future iteration
 
-Note the merchant registry is now populated with data from the Merchant acquirer system, but the assignment of an alias will need to be completed, and once the state of a registration is complete, the information will be provided back to the maker, so they can now inform the merchant of their aliases.
+> It is worth highlighting the anticipated payment flow would have potentially two parts for a payment - the first step capturing the merchant alias (for all merchants), the second capturing the final till to allow for payment reconciliation (for merchants that have more than one payment point). The actual detail of these flows will be covered in other stories, but it is highlighted to point out that the Merchant Registry will use the Merchant ID and the information to support reconciliation (```Till_ID```) will be part of the transaction, but not relevant to the Switch.
+
+Once the merchant or the DFSP has registered the information in the Acquirer system, it can then be passed to the Merchant Registry, where an alias will be validated or created
 
 ```mermaid
 
@@ -41,7 +43,7 @@ sequenceDiagram
     participant dfspapp as DFSP Application process
     actor DFSPMake as DFSP Maker
     actor DFSPCheck as DFSP Checker
-    participant macq as Merchant Acquirer System Portal
+    participant macq as Merchant Acquirer System
     participant oracle as Merchant Registry System
 
     merc ->> dfspapp: application process 
@@ -78,7 +80,8 @@ sequenceDiagram
             oracle->>macq: NEED TO AGREE
         end
 
-        macq ->> DFSPMake: Notify updated registration status of records, including all aliases that have been established for a merchant
+        macq ->> DFSPMake: Notify updated registration status of records, including alias that has been established for a merchant
+        DFSPMake->>dfspapp: Notification account created and alias assigned
     else Rejected
         DFSPCheck->>macq: Rejected action
         macq -->>DFSPCheck: Ask reason for rejection
