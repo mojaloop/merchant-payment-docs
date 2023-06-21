@@ -28,9 +28,11 @@ fsp2-->switch
 
 ## DFSP onboarding their merchant and assign an alias  
 
-DFSP onboard their Merchant into Central Merchant Registry via API/portal interface
+A DFSP will onboard their Merchant into a Central Merchant Registry via API/portal interface. The expectation is that this flow will also capture all the relevant information required to acquire the merchant.
 
-Working assumption for now is that the merchant KYB process is manual, however the system can consider this being done automatically
+The working assumption is that the merchant Know your Business (KYB) process is manual, however the system can consider this being done automatically in a future iteration
+
+Note the merchant registry is now populated with data from the Merchant acquirer system, but the assignment of an alias will need to be completed, and once the state of a registration is complete, the information will be provided back to the maker, so they can now inform the merchant of their aliases.
 
 ```mermaid
 
@@ -62,7 +64,7 @@ sequenceDiagram
     alt Approved
         DFSPCheck->>macq: approves data
         macq ->> macq: Update status 'succesful'
-        macq->>oracle: data for registation
+        macq->>oracle: submit data for registation
 
         oracle->>oracle: registered
         alt alias provided
@@ -76,7 +78,7 @@ sequenceDiagram
             oracle->>macq: NEED TO AGREE
         end
 
-        macq -->> DFSPMake: Notify updated registration status of records
+        macq ->> DFSPMake: Notify updated registration status of records, including all aliases that have been established for a merchant
     else Rejected
         DFSPCheck->>macq: Rejected action
         macq -->>DFSPCheck: Ask reason for rejection
