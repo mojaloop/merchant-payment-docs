@@ -26,15 +26,25 @@ fsp2-->switch
 
 ```
 
+## Overview
+
+The onboarding of a merchant in to the merchant registry, means that they are first acquired (or accepted) by a Digital Financial Service Provider (DFSP). We achieve this in different ways, we cover these in the following documentation.
+
+- DFSP onboards merchant entering data in to the portal
+- DFSP onboards merchant in their own system and shares the information with the Merchant registry.
+- Merchant self registration (they enter their details in to a scheme portal and then enter a portal to be acquired by DFSP(s))
+
+As a DFSP may not have an acquiring system, this document covers onboard by a DFSP in a portal first. 
+
 ## DFSP onboarding their merchant and assign an alias  
 
 A DFSP will onboard their Merchant into a Central Merchant Registry via API/portal interface. The expectation is that this flow will also capture all the relevant information required to acquire the merchant.
 
-The working assumption is that the merchant Know your Business (KYB) process is manual, however the system can consider this being done automatically in a future iteration
+The working assumption is that the merchant Know your Business (KYB) process is manual, the system can consider this could be done automatically in a future iteration
 
 > It is worth highlighting the anticipated payment flow would have potentially two parts for a payment - the first step capturing the merchant alias (for all merchants), the second capturing the final till to allow for payment reconciliation (for merchants that have more than one payment point). The actual detail of these flows will be covered in other stories, but it is highlighted to point out that the Merchant Registry will use the Merchant ID and the information to support reconciliation (```Till_ID```) will be part of the transaction, but not relevant to the Switch.
 
-Once the merchant or the DFSP has registered the information in the Acquirer system, it can then be passed to the Merchant Registry, where an alias will be validated or created
+Once the merchant or the DFSP has registered the information in the Acquirer system, the portal passes the necessary information to the Merchant Registry, where an alias is either validated or created
 
 ```mermaid
 
@@ -51,7 +61,7 @@ sequenceDiagram
     Note over dfspapp: not related to switch
 
     dfspapp ->> DFSPMake: extract merchant data
-
+    
     Note over DFSPMake: Import merchant records
 
     DFSPMake ->> macq: enter Merchant Data
@@ -59,7 +69,7 @@ sequenceDiagram
     macq ->> macq: data stored
     macq->>DFSPMake: pending
 
-    macq-->>DFSPCheck: You have things to review
+    macq-->>DFSPCheck: You have information to review
 
     DFSPCheck->>DFSPCheck: KYB process
 
@@ -80,14 +90,14 @@ sequenceDiagram
             oracle->>macq: NEED TO AGREE
         end
 
-        macq ->> DFSPMake: Notify updated registration status of records, including alias that has been established for a merchant
+        macq ->> DFSPMake: Notify updated registration status of records, including alias created for a merchant
         DFSPMake->>dfspapp: Notification account created and alias assigned
     else Rejected
         DFSPCheck->>macq: Rejected action
         macq -->>DFSPCheck: Ask reason for rejection
         DFSPCheck -->> macq: Update reasons for rejections
         macq -->> macq: Registration status of rejected action records will change as 'rejected'
-        macq -->> DFSPMake: Notify that registration status of each record will be remain the same as prior to status change request    
+        macq -->> DFSPMake: Notify that registration status of each record will be remain the same as before the  status change request    
     end
     
 ```
