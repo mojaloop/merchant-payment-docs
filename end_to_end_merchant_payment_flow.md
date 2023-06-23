@@ -10,7 +10,7 @@ As we are creating a merchant, it's locations and tills, we would need to consid
 
 ## Simple - 1 location, 1 counter  
 
-Data held at Merchant Registry
+Data exposed by Merchant Registry
 | Item | Sample Data |
 |------|-------------|
 | DFSP ID | 87654321 |
@@ -20,7 +20,7 @@ Data held at Merchant Registry
 | Location | {full address} |
 | MobileNumber | |
 
-Data held at DFSP
+Data exposed by DFSP
 | Item | Sample Data |
 |------|-------------|
 | PayIntoID (Alias) | 12345678 |
@@ -43,17 +43,24 @@ sequenceDiagram
     cust ->> PayerFSP : Pay Merchant [PayIntoID]
     note over cust:Customer provides<br/>Merchant Alias<br/>[PayIntoID](12345678)
     cust ->> PayerFSP : Pay Till No [Till_ID]
-    note over cust:Customer provides<br/>Till Number<br/>[PayIntoID](000001)
-    PayerFSP->>+switch: GET - /participants/Merchant/{ID}
-    note over switch: GET - /participants/Merchant/12345678
+    note over cust:Customer provides<br/>Till Number<br/>[CheckOutCounterID](000001)
+    PayerFSP->>+switch: GET - /parties/Merchant/{ID}
+    note over switch: GET - /parties/Merchant/12345678
     switch-->>+PayerFSP: http/202 accepted
     note over switch: idType="Merchant"<br/>route to Merchant Registry
     switch->>+oracle: GET - /participants/Merchant/{ID}
     note over oracle: GET - /participants/Merchant/12345678
     oracle-->>+switch: Return list of Particpant Information
-    note over switch: PAYINTOID, MERCHANTID, DFSPID
+    note over switch: PAYINTOID, DFSPID,<br/>Extension list:MERCHANTID, ClientID etc.
+    switch->>+PayeeFSP: GET /Parties/Merchant/{ID}
+    note over PayeeFSP: GET /Parties/Merchant/12345678
+    PayeeFSP->>+switch: PUT /Parties/Merchant/12345678<br/>PartyInformation
+    note over switch: GET /Parties/Merchant/12345678<br/>Extension list:MERCHANTID, DBAName, ClientID etc, location etc.
     switch->>+PayerFSP: PUT - /participants/Merchant/{ID}<br/>(where ID=Alias)
-    note over switch: PUT - /participants/Merchant/12345678<br/>{PAYINTOID, MERCHANTID, DFSPID}
+    note over PayerFSP: PUT - /Parties/Merchant/12345678<br/>Extension list:MERCHANTID, DBAName, ClientID etc, location etc.
+    PayerFSP->>+switch: POST /transfers <br/>(transferID, conditions, ILP Packet including transaction details, expiry=30seconds)
+    note over switch:  POST /transfers <br/>(transferID, conditions, ILP Packet including transaction details,<br/>{MerchantID, Client ID, CheckoutCounterID},<br/> expiry=30seconds)
+    switch->>PayeeFSP: Normal flow
     
 ```
 
