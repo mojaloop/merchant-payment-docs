@@ -71,23 +71,23 @@ This allows us to create the following sample data for each of these merchants.
 |  |  |  |  |  |  |  |
 | **M010**        | 010 Store - Loc 1 | M013                  | C001                   | DFSP1       | A135         |                    |
 |         | 010 Store - Loc 1 | M013                  | C002                   | DFSP1       | A135         |                    |
-|         | 010 Store - Loc 2 | M014                  | C001                   | DFSP1       | A135         |                    |
-|         | 010 Store - Loc 2 | M014                  | C002                   | DFSP1       | A135         |                    |
+|         | 010 Store - Loc 2 | M014                  | C001                   | DFSP1       | A136         |                    |
+|         | 010 Store - Loc 2 | M014                  | C002                   | DFSP1       | A136         |                    |
 |  |  |  |  |  |  |  |
-| **M011**        | 011 Store - Loc 1 | M015                  | C001                   | DFSP1       | A136         |                    |
-|         | 011 Store - Loc 1 | M015                  | C002                   | DFSP1       | A136         |                    |
-|         | 011 Store - Loc 2 | M016                  | C003                   | DFSP1       | A136         |                    |
-|         | 011 Store - Loc 2 | M016                  | C004                   | DFSP1       | A136         |                    |
+| **M011**        | 011 Store - Loc 1 | M015                  | C001                   | DFSP1       | A137         |                    |
+|         | 011 Store - Loc 1 | M015                  | C002                   | DFSP1       | A137         |                    |
+|         | 011 Store - Loc 2 | M016                  | C003                   | DFSP1       | A138         |                    |
+|         | 011 Store - Loc 2 | M016                  | C004                   | DFSP1       | A138         |                    |
 |  |  |  |  |  |  |  |
-| **M012**        | 012 Store - Loc 1 | M017                  | C001                   | DFSP1       | A137         |                    |
-|         | 012 Store - Loc 1 | M018                  | C002                   | DFSP1       | A137         |                    |
-|         | 012 Store - Loc 2 | M019                  | C001                   | DFSP1       | A138         |                    |
-|         | 012 Store - Loc 2 | M020                  | C002                   | DFSP1       | A138         |                    |
+| **M012**        | 012 Store - Loc 1 | M017                  | C001                   | DFSP1       | A139         |                    |
+|         | 012 Store - Loc 1 | M018                  | C002                   | DFSP1       | A140         |                    |
+|         | 012 Store - Loc 2 | M019                  | C001                   | DFSP1       | A141         |                    |
+|         | 012 Store - Loc 2 | M020                  | C002                   | DFSP1       | A142         |                    |
 |  |  |  |  |  |  |  |
-| **M013**        | 013 Store - Loc 1 | M021                  | C001                   | DFSP1       | A139         |                    |
-|         | 013 Store - Loc 1 | M021                  | C002                   | DFSP1       | A140         |                    |
-|         | 013 Store - Loc 2 | M022                  | C003                   | DFSP1       | A141         |                    |
-|         | 013 Store - Loc 2 | M023                  | C004                   | DFSP1       | A142         |
+| **M013**        | 013 Store - Loc 1 | M021                  | C001                   | DFSP1       | A143         |                    |
+|         | 013 Store - Loc 1 | M022                  | C002                   | DFSP1       | A144         |                    |
+|         | 013 Store - Loc 2 | M023                  | C003                   | DFSP1       | A145         |                    |
+|         | 013 Store - Loc 2 | M024                  | C004                   | DFSP1       | A146         |
 |  |  |  |  |  |  |  |
 
 To ensure that the alias creation works as designed, the following use cases are then worked through to ensure the user experience is acceptable
