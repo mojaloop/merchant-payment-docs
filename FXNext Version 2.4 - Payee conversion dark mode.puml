@@ -1,0 +1,342 @@
+@startuml
+
+
+title Transferring with Currency Conversion\nPayee DFSP requests conversion
+
+actor "Upile Chisala" as cust
+participant "NBS\nBank" as PayerFSP
+participant "FDH FX" as fxp
+participant "Switch" as Switch
+participant "Zoona" as PayeeFSP
+participant ALS
+autonumber
+
+
+note over fxp
+
+    I will add a 150 MWK fee for undertaking the conversion.
+    Now I'll set an expiry time, sign the quotation object,
+    create an ILPV4 prepare packet and return it in the intermediary object.
+
+    NOTE: the ILPV4 prepare packet contains the following items, all encoded:
+    - The amount being sent (i.e. in the source currency)
+    - An expiry time
+    - The condition
+    - The name of the fxp
+    - The content of the conversion terms
+
+    ** PUT /fxQuotes/828cc75f-1654-415e-8fcd-df76cc9329b9**
+
+    {
+        "condition": "bdbcf517cfc7e474392935781cc14043602e53dc2e8e8452826c5241dfd5e7ab"
+        , "conversionTerms": {
+            "conversionId": "581f68ef-b54f-416f-9161-ac34e889a84b"
+            , "initiatingFsp": "NBS_Bank"
+            "sourceAmount": {
+                "currency": "MWK",
+                "amount": "5000"
+            }
+            , "targetAmount": {
+                "currency": "ZMW",
+                "amount": "100"
+            }
+            , "charges": [
+                {
+                    "chargeType": "Conversion fee"
+                    , "sourceAmount": {
+                        "currency": "MWK"
+                        , "amount": "150"
+                    }
+                    , "targetAmount": {
+                        "currency": "ZMW"
+                        , "amount": "3"
+                    }
+                }
+            ]
+        }
+    }
+end note
+fxp->Switch:Here's the signed conversion object
+activate Switch
+Switch-->fxp:200 Gotcha
+deactivate fxp
+Switch->PayeeFSP:Here's the signed conversion object\n**PUT /fxQuotes/828cc75f-1654-415e-8fcd-df76cc9329b9**
+activate PayeeFSP
+PayeeFSP-->Switch:Gotcha
+deactivate Switch
+
+
+PayeeFSP->PayeeFSP:OK, so I will charge 2 ZMW for this.\nNow I sign the transaction object\nand return it to the Debtor DFSP
+PayeeFSP->Switch:Here's the signed quote
+note over PayeeFSP
+
+    **put /quotes/382987a8-75ce-4037-b500-c475e08c1727**
+
+    {
+        "transferAmount": {
+            "currency": "MWS"
+            , "amount": "5000"
+        }
+        , "payeeReceiveAmount": {
+            "currency": "ZMW"
+            , "amount": "95"
+        },
+        "payeeFspFee": {
+            "currency": "ZMW"
+            , "amount": "5"
+        }
+        , "expiration": "2021-08-25T14:17:09.663+01:00
+        , ilpPacket: {
+            "transactionId": "d9ce59d4-3598-4396-8630-581bb0551451"
+            "quoteId": "382987a8-75ce-4037-b500-c475e08c1727"
+            , "payee": {
+                "partyIdInfo": {
+                "partyIdType": "MSISDN"
+                , "partyIdentifier": "260795390415"
+                }
+            }
+            , "payer": {
+                "partyIdInfo": {
+                    "partyIdType": "MSISDN"
+                    , "partyIdentifier": "265314118010"
+                }
+            },
+            , "amount": {
+                "currency": "MWK"
+                , "amount": "5000"
+            }
+            , "dependents":[
+                {
+                    "intermediary": "FDH_FX"
+                    , "condition": "bdbcf517cfc7e474392935781cc14043602e53dc2e8e8452826c5241dfd5e7ab"
+                }
+            ]
+            , "transactionType": {
+                "scenario": "TRANSFER"
+                , "initiator": "PAYER"
+                , "initiatorType": "CONSUMER"
+            }
+        }
+        , "condition": "BfNFPRgfKF8Ke9kpoNAagmcI4/Hya5o/rq9/fq97ZiA="
+    }
+
+    end note
+    activate Switch
+    Switch-->PayeeFSP:200 Gotcha
+    deactivate PayeeFSP
+    Switch->PayerFSP:Here's the signed quote\n**PUT /quotes/382987a8-75ce-4037-b500-c475e08c1727**
+    activate PayeeFSP
+    PayerFSP-->Switch:200 Gotcha
+    deactivate Switch
+    PayerFSP->PayerFSP:OK, I can see that there are going to be 5 ZMW in charges.
+    PayerFSP->cust:Hi, Upile: I can do the transfer.\nIt'll cost you 250 MWK in fees\nand Mulenga Kapwepwe will receive\n95 ZMW.\nLet me know if you want to go ahead
+    cust-->PayerFSP:Great! Yes please, go ahead
+
+    == Transfer Phase ==
+
+    PayerFSP->Switch:Please do the transfer
+    note over PayerFSP
+
+    POST /transfers
+
+    {
+        "transferId": "c720ae14-fc72-4acd-9113-8b601b34ba4d"
+        , "payeeFsp": "Zoona"
+        , "payerFsp": "NBS_Bank"
+        , "amount": {
+            "currency": "MWK"
+            , "amount": "5000"
+        }
+        , "transaction": {
+        , "transactionId": "d9ce59d4-3598-4396-8630-581bb0551451"
+        , "quoteId": "382987a8-75ce-4037-b500-c475e08c1727"
+        , "payee": {
+            "fspId": "Zoona"
+            , "partyIdInfo": {
+                "partyIdType": "MSISDN"
+                , "partyIdentifier": "260795390415"
+            }
+        }
+        , "payer": {
+             "fspId": "NBS_Bank"
+            , "partyIdInfo": {
+                "partyIdType": "MSISDN"
+                , "partyIdentifier": "265314118010"
+            }
+        }
+        , "dependents":[
+            {
+                "intermediary": "FDH_FX"
+                , "condition": "bdbcf517cfc7e474392935781cc14043602e53dc2e8e8452826c5241dfd5e7ab"
+            }
+        ]
+    }
+
+    end note
+    activate Switch
+    Switch-->PayerFSP:202 I'll get back to you
+    deactivate PayerFSP
+    Switch->Switch:Does the debtor hold an account in MWK? Yes.
+    Switch->Switch:Make the reservation against their account.
+    note over Switch
+
+    Reservations:
+
+    NBS_Bank has a reservation of 5000 MWK
+
+    end note
+    Switch->PayeeFSP:Please do the transfer\n**POST /transfers**
+    activate PayeeFSP
+    PayeeFSP-->Switch:202 I'll get back to you
+    deactivate Switch
+
+    PayeeFSP->PayeeFSP:Do I need to activate currency conversion?\nYes, I do
+    PayeeFSP->Switch:Please confirm your part of the transfer
+    note over PayeeFSP
+
+    **POST /fxTransfers**
+
+    {
+        "commitRequestId": "77c9d78d-c26a-4474-8b3c-99b96a814bfc"
+        , "relatedTransactionId": "d9ce59d4-3598-4396-8630-581bb0551451"
+        , "requestingFsp": "Zoona"
+        , "respondingfxp": "FDH_FX"
+        , "sourceAmount": {
+            "currency": "MWK",
+            "amount": "5000"
+        }
+        , "targetAmount": {
+            "currency": "ZMW",
+            "amount": "97"
+        }
+        , "condition": "bdbcf517cfc7e474392935781cc14043602e53dc2e8e8452826c5241dfd5e7ab"
+    }
+    end note
+    activate Switch
+    Switch-->PayeeFSP:202 I'll get back to you
+    deactivate PayeeFSP
+    Switch->Switch:OK, so this is an FX confirmation.
+    Switch->Switch: Does the sender have an account in this currency?\nNo, it doesn't.
+    Switch->Switch: Liquidity check and reserve on fxp's account
+    note over Switch
+
+    Reservations:
+
+    NBS_Bank has a reservation of 5000 MWK
+    FDH_FX has a reservation of 97 ZMW
+
+    end note
+
+    Switch->fxp:Please confirm the currency conversion part of the transfer\n** POST /fxTransfers**
+    activate fxp
+    fxp-->Switch:202 I'll get back to you
+    deactivate Switch
+    fxp->fxp:Is all this OK?\nIf so, send the fulfilment back
+    fxp->Switch:Confirmed. Here's the fulfilment
+    note over fxp
+
+    **PUT /fxTransfers/77c9d78d-c26a-4474-8b3c-99b96a814bfc**
+
+    {
+        "fulfilment": "188909ceb6cd5c35d5c6b394f0a9e5a0571199c332fbd013dc1e6b8a2d5fff42"
+        , "completedTimeStamp": "2021-08-25T14:17:08.175+01:00"
+        , "conversionState": "RESERVED"
+    }
+
+    end note
+    activate Switch
+    Switch-->fxp:200 Gotcha
+    deactivate fxp
+    Switch->Switch:Check fulfilment matches and cancel if not.
+    alt Conversion failed
+    Switch->PayeeFSP:Sorry. Conversion failed
+    note over Switch
+
+    **PUT /fxTransfers/77c9d78d-c26a-4474-8b3c-99b96a814bfc/error**
+
+    {
+        "errorCode": "9999"
+        , "errorDescription": "Whatever the error was"
+    }
+
+    end note
+    else Conversion succeeded
+
+    Switch->PayeeFSP:Conversion succeeded subject to transfer success\n**PUT /fxTransfers/77c9d78d-c26a-4474-8b3c-99b96a814bfc**
+    note over Switch
+
+    end note
+    end
+    activate PayeeFSP
+    PayeeFSP-->Switch:200 Gotcha
+    deactivate Switch
+    PayeeFSP->PayeeFSP:Let me check that the terms of the transfer\nare the same as the ones I agreed to
+    PayeeFSP->PayeeFSP:Yes, they do. I approve the transfer
+    PayeeFSP->Switch:Transfer is confirmed, here's the fulfilment
+    note over PayeeFSP
+
+    **PUT /transfers/c720ae14-fc72-4acd-9113-8b601b34ba4d**
+
+    {
+        "fulfilment": "mhPUT9ZAwd-BXLfeSd7-YPh46rBWRNBiTCSWjpku90s"
+        , "completedTimestamp": "2021-08-25T14:17:08.227+01:00"
+        , "transferState": "COMMITTED"
+    }
+
+
+    end note
+    activate Switch
+    Switch-->PayeeFSP:200 Gotcha
+    deactivate PayeeFSP
+    Switch->Switch:
+    Switch->Switch:Is there a dependent transfer?\nYes, there is.
+    Switch->Switch:Is this dependency against the debtor party to the transfer?\nNo, it isn't.
+    Switch->Switch:Create an obligation from\nthe party named in the dependency (the fxp)\nto the creditor party
+    Switch->Switch:Is the transfer denominated in the currency of the amount?\nYes, it is.
+    Switch->Switch:Create an obligation from\nthe debtor party to\nthe party named in the dependency (the fxp)
+    Switch->fxp:The transfer succeeded.\nYou can clear it in your ledgers
+    note over Switch
+
+    **PATCH /fxTransfers/77c9d78d-c26a-4474-8b3c-99b96a814bfc**
+
+    {
+        "fulfilment": "2e6870fb4eda9c2a29ecf376ceb5b05c"
+        , "completedTimeStamp": "2021-08-25T14:17:08.175+01:00"
+        , "conversionState": "COMMITTED"
+    }
+
+end note
+activate fxp
+fxp->fxp:Let's just check: does this match the stuff I sent?
+fxp->fxp:It does. Great. I'll clear the conversion
+fxp->Switch:200 Gotcha
+deactivate fxp
+note over Switch
+
+    Ledger positions:
+    NBS_Bank has a debit of 5000 MWK
+    FDH_FX has a credit of 5000 MWK
+    FDH_FX has a debit of 97 ZMW
+    Zoona has a credit of 97 ZMW
+
+end note
+Switch->PayerFSP:Transfer is complete\n**PUT /transfers/c720ae14-fc72-4acd-9113-8b601b34ba4d**
+activate PayerFSP
+PayerFSP-->Switch:200 Gotcha
+deactivate Switch
+PayerFSP->PayerFSP:Commit the funds in my ledgers
+PayerFSP->Amanda:Transfer was completed successfully
+deactivate PayerFSP
+
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 18:01:30 BST 2022)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: Cp1252
+Language: en
+Country: GB
+-->
+  </g>
+</svg>
