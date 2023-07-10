@@ -13,3 +13,11 @@
 * Multiple filters should be able to selected at once. 
     * example added by "xxx" AND updated time "hh:mm dd/mm/yyyy"
 * When user has clicked "clear filter" button, reset the value to null in each filter and all data should be reflected to the tables. 
+
+## Report download
+**As a** DFSP user, **I want to** be able to download filtered out records from each reports based on my selected criteria. 
+### Acceptance Criteria
+* reports should be dowonloadable by following formats
+    * csv
+    * pdf
+    * excel
