@@ -8,6 +8,12 @@ description: flows for a merchant payment
 tags: 
 ---  
 
+## Making a payment to a merchant via USSD (customer initiated)
+
+In the following scenario, we are going to test the boundaries a little, by assuming that the Payment to the merchant will be from a user in one country to a merchant in another country. We provide the data that is needed below and the sequence and the flow of information between the various parties.
+
+The design currently assumes each party has an account identifier that only maps to a single currency. Further design would be required to support an identifier that maps to multiple currencies and any potential resolution that might be required. The receiving DFSP will initiate the conversion of the foreign exchange currency (equally this could be facilitated by the paying DFSP, but this will be explored later).
+
 ## Data needed to create a record  
 
 As we are creating a merchant, it's locations and tills, we would need to consider the following data elements
@@ -19,26 +25,33 @@ As we are creating a merchant, it's locations and tills, we would need to consid
 
 ## Simple - 1 location, 1 counter  
 
-Data exposed by Merchant Registry
-| Item | Sample Data |
-|------|-------------|
-| DFSP ID | 87654321 |
-| MerchantID | 87654321 |
-| PayIntoID (Alias) | 12345678 |
-| Name of Merchant | ABC Store |
-| Location | {full address} |
-| MobileNumber | |
+We will assume our customer is in Malawi, and our merchant is in Zambia.
 
-Data exposed by DFSP
-| Item | Sample Data |
-|------|-------------|
-| PayIntoID (Alias) | 12345678 |
+As the merchant will be displaying their price in the transacting currency, it will be necessary to send a "receive" request, to ensure that the merchant gets the price expected.
+
+The transaction will be for 100 ZMK, with an exchange rate of 1 ZMK equal to 57.31 MWK.
+The Merchant FSP will charge 1ZMK for the merchant transaction.
+
+### Data exposed by Merchant Registry
+
+| Item              | Sample Data    |
+| ----------------- | -------------- |
+| DFSP ID           | DFSP2          |
+| MerchantID        | 87654321       |
+| PayIntoID (Alias) | 12345678       |
+| Name of Merchant  | ABC Store      |
+| Location          | {full address} |
+| MobileNumber      |                |
+
+### Data exposed by Payee DFSP
+
+| Item                    | Sample Data            |
+| ----------------------- | ---------------------- |
+| PayIntoID (Alias)       | 12345678               |
 | Pay Into Account Number | PK23HABB12313123121132 |
-| CheckOutCounterID | 000001 |
-| Name of Merchant | ABC Store |
-| Location | {full address} |
-
-## Making a payment to a merchant in USSD (customer initiated)
+| CheckOutCounterID       | 000001                 |
+| Name of Merchant        | ABC Store              |
+| Location                | {full address}         |
 
 ### Finding DFSP that maintains this Merchant ID
 
@@ -58,15 +71,15 @@ participant PayeeFSP as Merchant's<br/>DFSP
 actor merc as Small Merchant
 
 # start flow
-cust->>merc: I would like to buy<br/>this goods or service
-merc ->> cust: The goods or service cost<br/>ZMK 100 before any fees,<br/>please initiate the transaction
+cust->>merc: I would like to buy<br/>these goods or services
+merc ->> cust: The goods or service cost<br/>ZMK 100 before any fees,<br/>please send me the money, by initiating the transaction
 note over cust,PayerFSP: Question 1<br/>On a USSD flow, how do I add<br/>a counter when I have a Merchant ID?
 note over cust,PayerFSP: Question 2<br/>On a USSD flow, how do I add<br/>an alternative currency?
 rect rgb(100, 100, 100)
     cust ->> PayerFSP: I would like Merchant ID 12345678 <br/>to receive ZMK 100
     activate PayerFSP
     note over cust:Customer Participant<br/>Merchant Alias<br/>[PayIntoID](12345678)
-    cust ->> PayerFSP : Pay Till No [Till_ID]
+    cust ->> PayerFSP : Pay CheckOutCounterID [000001]
     note over cust:Customer provides<br/>Till Number<br/>[CheckOutCounterID](000001)
 end
 
@@ -94,7 +107,6 @@ deactivate Switch
 PayerFSP ->> cust: Is "ABC Store" correct?
 deactivate PayerFSP
 
-
 ```
 
 ### PUT /parties/Merchant
@@ -106,13 +118,17 @@ PUT /parties
         "partyIDType": "Merchant"
         "partyIdentifier": "12345678"
         }
-    "name": "Merchant ABC Store",
+    "name": "ABC Store",
     "receiveCurrencies":[
         "ZMK"
         ]
+    "extensionlist": {
+        "merchantID": "87654321"
+        ,"DBAName": "ABC Store"
+        ,"AccountID": "PK23HABB12313123121132"
+        ,"location": "{full address}"}
+
     }
-Extension list:
-MERCHANTID, DBAName, ClientID etc, location etc.
 ```
 
 ### Open Questions
@@ -120,8 +136,6 @@ MERCHANTID, DBAName, ClientID etc, location etc.
 - What if a DFSP has more than one receive currency? In a Smart Phones, I would expect a selection, but how would this work in USSD?
 - Extend that problem to consider a merchant account that can receive multiple currencies.
 - In a retail transaction, a customer would see a price in a foreign currency - but we need to get that in to a USSD flow somehow, how does the consumer enter correct currency? (whatever is proposed needs to factor the above scenarios)
-
-
 
 ### Quotes
 
@@ -140,6 +154,7 @@ participant fxp as FX<br/>Provider
 participant PayeeFSP as Merchant's<br/>DFSP
 actor merc as Small Merchant
 
+# start flow
 cust->>merc: I would like to buy<br/>this goods or service
 merc ->> cust: The goods or service cost<br/>100 ZMK before any fees,<br/>please initiate the transaction
 
@@ -152,14 +167,12 @@ rect rgb(100, 100, 100)
 end
 PayerFSP ->> PayerFSP: Lookup 12345678 (outlined above)
 PayerFSP ->> Switch: POST /quotes<br/>(amountType=RECEIVE,<br/>amount=100 ZMK)
-Switch -->> PayerFSP: HTTP 202 (Accepted)
 note over PayerFSP: SEE POST /quotes
-activate Switch
+Switch -->> PayerFSP: HTTP 202 (Accepted)
 Switch ->> PayeeFSP: POST /quotes<br/>(amountType=RECEIVE,<br/>amount=100 ZMK)
-activate PayeeFSP
 PayeeFSP -->> Switch: HTTP 202 (Accepted)
 PayeeFSP ->> PayeeFSP: check inbound currency
-PayeeFSP ->> PayeeFSP: I do not have MWK - so I need to get an FXP
+PayeeFSP ->> PayeeFSP: I can receive ZMK for this customer,<br/>I do not have MWK - so I need to get an FXP
 PayeeFSP ->> Switch: GET /services/FXP
 Switch-->> PayeeFSP: HTTP: 202 (Accepted)
 Switch ->> ALS: Tell me FXPs
@@ -168,17 +181,10 @@ Switch ->> PayeeFSP: These are my FXPs: FDH FX
     note over Switch: SEE PUT /services/FXP
 PayeeFSP -->> Switch: HTTP 200
 PayeeFSP ->> PayeeFSP: I will use FDH FX
-PayeeFSP ->> Switch: PUT /quotes/<ID><br/>(transferAmount=100 ZMK)
-Switch -->> PayeeFSP: HTTP 200 (OK)
-deactivate PayeeFSP
-Switch ->> PayerFSP: PUT /quotes/<ID><br/>(transferAmount=100 ZMK)
-PayerFSP -->> Switch: HTTP 200 (OK)
-deactivate Switch
-PayerFSP ->> PayerFSP: Fee is 1 ZMK in Payer<br/>FSP for Merchant Payment,<br/>total fee is 1 ZMK
-PayeeFSP ->> Switch: Here is the initial version of the transfer.\nPlease quote me for the currency conversion.
+PayeeFSP ->> Switch: Here is the initial version of the transfer.<br/>Please quote me for the currency conversion.
 note over PayeeFSP: SEE post /fxQuotes
 Switch -->> PayeeFSP: HTTP 202 (Accepted)
-Switch ->> fxp: Here is the initial version of the transfer.\nPlease quote me for the currency conversion.\n**POST /fxQuotes**
+Switch ->> fxp: Here is the initial version of the transfer.<br/>Please quote me for the currency conversion.<br/>**POST /fxQuotes**
 fxp -->> Switch: HTTP 202 (Accepted)
 fxp ->> fxp: OK, so I need to figure this out...
 fxp ->> Switch: Send signed conversion object
@@ -193,7 +199,7 @@ PayerFSP -->> Switch:: HTTP 200 (OK)
 
 ```
 
-### Commentary
+#### Commentary
 
 During the FX Quote, the FXP can add a fee, they will then set an expiry time and sign the quotation object, create an ILPV4 prepare packet and return it in the intermediary object.
 
@@ -204,6 +210,7 @@ During the FX Quote, the FXP can add a fee, they will then set an expiry time an
 > - The condition  
 > - The name of the fxp  
 > - The content of the conversion terms  
+
 
 ### Questions  
 
@@ -228,56 +235,18 @@ deactivate PayerFSP
 
 ```
 
-### POST /quotes
-
-Currently the message body does not tell me the sending currency
-
-NOR IS IT CORRECT
-```json
-POST /quotes
-
-{
-    "quoteId": "382987a8-75ce-4037-b500-c475e08c1727"
-    ,"transactionId": "d9ce59d4-3598-4396-8630-581bb0551451"
-    ,"payee": {
-        "partyIdInfo": {
-            "partyIdType": "Merchant",
-            "partyIdentifier": "12345678"
-            }
-    }
-    ,"payer": {
-        "partyIdInfo": {
-            "partyIdType": "MSISDN"
-            ,"partyIdentifier": "265314118010"
-        }
-    }
-    , "amountType": "RECEIVE"
-    , "amount": {
-        "currency": "ZMK"
-        ,"amount": "100"
-    }
-    ,"converter": "PAYEE"
-    ,"transactionType": {
-        "scenario": "TRANSFER"
-        ,"initiator": "PAYER"
-        ,"initiatorType": "CONSUMER"
-    }
-}
-```
 
 ### PUT /services/FXP
 
 ```json
 PUT /services/FXP
 
-"fxpProviders":["
-FDH FX"
-]
+"fxpProviders":[
+    "FDH FX"
+    ]
 ```
 
 ### POST /fxQuotes
-
-Need to ensure this is correct, then add it to the body above
 
 ```json
     {
@@ -288,7 +257,7 @@ Need to ensure this is correct, then add it to the body above
         , "amountType": "RECEIVE"
         , "sourceAmount": {
             "currency": "MWK",
-            "amount": "5000"
+            "amount": "5731"
             }
         , "targetAmount": {
             "currency": "ZMW"
@@ -307,10 +276,10 @@ Need to ensure this is correct, then add it to the body above
         "condition": "bdbcf517cfc7e474392935781cc14043602e53dc2e8e8452826c5241dfd5e7ab"
         , "conversionTerms": {
             "conversionId": "581f68ef-b54f-416f-9161-ac34e889a84b"
-            , "initiatingFsp": "NBS_Bank"
+            , "initiatingFsp": "User's FSP"
             , "sourceAmount": {
                 "currency": "MWK",
-                "amount": "5000"
+                "amount": "5731"
             }
             , "targetAmount": {
                 "currency": "ZMW",
@@ -321,7 +290,7 @@ Need to ensure this is correct, then add it to the body above
                     "chargeType": "Conversion fee"
                     , "sourceAmount": {
                         "currency": "MWK"
-                        , "amount": "150"
+                        , "amount": "172"
                     }
                     , "targetAmount": {
                         "currency": "ZMW"
@@ -335,7 +304,6 @@ Need to ensure this is correct, then add it to the body above
 
 ### PUT /quotes  
 
-NEED TO PUT CORRECT DETAIL IN
 
 ```json
 put /quotes/382987a8-75ce-4037-b500-c475e08c1727
@@ -343,7 +311,7 @@ put /quotes/382987a8-75ce-4037-b500-c475e08c1727
 {
     "transferAmount": {
         "currency": "MWS"
-        , "amount": "5000"
+        , "amount": "5731"
     }
     , "payeeReceiveAmount": {
         "currency": "ZMW"
@@ -365,13 +333,13 @@ put /quotes/382987a8-75ce-4037-b500-c475e08c1727
         }
         , "payer": {
             "partyIdInfo": {
-                "partyIdType": "MSISDN"
-                , "partyIdentifier": "265314118010"
+                "partyIdType": "MERCHANT"
+                , "partyIdentifier": "87654321"
             }
         }
         , "amount": {
             "currency": "MWK"
-            , "amount": "5000"
+            , "amount": "5731"
         }
         , "dependents":[
             {
@@ -394,11 +362,8 @@ put /quotes/382987a8-75ce-4037-b500-c475e08c1727
 ## Transfer
 
 ```mermaid
-
-
-
 sequenceDiagram
-Title: Process Quotes
+Title: Process Transfer
 
 autonumber
 
@@ -411,12 +376,13 @@ participant fxp as FX<br/>Provider
 participant PayeeFSP as Merchant's<br/>DFSP
 actor merc as Small Merchant
 
+# start flow
 cust ->> PayerFSP: Perform transaction
 PayerFSP ->> Switch: SEE POST /transfers
 Switch -->> PayerFSP: HTTP 202 (Accepted)
 Switch ->> Switch: Does the debtor hold an account in MWK? Yes.
 Switch ->> Switch: Make the reservation against their account.
-note over Switch: <br/>Reservations:<br/><br/>NBS_Bank has a reservation of 5000 MWK
+note over Switch: <br/>Reservations:<br/><br/>NBS_Bank has a reservation of 5731 MWK
 Switch ->> PayeeFSP: SEE POST /transfers
 PayeeFSP -->> Switch: HTTP 202 (Accepted)
 PayeeFSP ->> PayeeFSP: Do I need to activate currency conversion?<br/>Yes, I do
@@ -425,10 +391,10 @@ Switch -->> PayeeFSP: HTTP 202 (Accepted)
 Switch->Switch: OK, so this is an FX confirmation.
 Switch->Switch: Does the sender have an account in this currency?<br/>No, it doesn't.
 Switch->Switch: Liquidity check and reserve on fxp's account
-note over Switch :Reservations:<br/><br/>NBS_Bank has a reservation of 5000 MWK<br/>FDH_FX has a reservation of 97 ZMW
-Switch->fxp:Please confirm the currency conversion part of the transfer\n** POST /fxTransfers**
+note over Switch :Reservations:<br/><br/>NBS_Bank has a reservation of 5731 MWK<br/>FDH_FX has a reservation of 97 ZMW
+Switch->fxp:Please confirm the currency conversion part of the transfer<br/>** POST /fxTransfers**
 fxp-->Switch:202 I'll get back to you
-fxp->fxp:Is all this OK?\nIf so, send the fulfilment back
+fxp->fxp:Is all this OK?<br/>If so, send the fulfilment back
 fxp->Switch:Confirmed. Here's the fulfilment
 note over fxp: SEE PUT /fxTransfers
 Switch-->fxp:200 Gotcha
@@ -436,54 +402,30 @@ Switch->Switch:Check fulfilment matches and cancel if not.
 alt Conversion failed
     Switch->PayeeFSP: SEE ERROR PUT/fxTransfers
 else Conversion succeeded
-Switch->PayeeFSP:Conversion succeeded subject to transfer success\n**PUT /fxTransfers/77c9d78d-c26a-4474-8b3c-99b96a814bfc**
+Switch->PayeeFSP:Conversion succeeded subject to transfer success<br/>**PUT /fxTransfers/77c9d78d-c26a-4474-8b3c-99b96a814bfc**
 end
 PayeeFSP-->Switch:200 Gotcha
-PayeeFSP->PayeeFSP:Let me check that the terms of the transfer\nare the same as the ones I agreed to
+PayeeFSP->PayeeFSP:Let me check that the terms of the transfer<br/>are the same as the ones I agreed to
 PayeeFSP->PayeeFSP:Yes, they do. I approve the transfer
 PayeeFSP->Switch: SEE PUT /transfers
 Switch-->PayeeFSP:200 Gotcha
-Switch->Switch:Is there a dependent transfer?\nYes, there is.
-Switch->Switch:Is this dependency against the debtor party to the transfer?\nNo, it isn't.
-Switch->Switch:Create an obligation from\nthe party named in the dependency (the fxp)\nto the creditor party
-Switch->Switch:Is the transfer denominated in the currency of the amount?\nYes, it is.
-Switch->Switch:Create an obligation from\nthe debtor party to\nthe party named in the dependency (the fxp)
+Switch->Switch:Is there a dependent transfer?<br/>Yes, there is.
+Switch->Switch:Is this dependency against the debtor party to the transfer?<br/>No, it isn't.
+Switch->Switch:Create an obligation from<br/>the party named in the dependency (the fxp)<br/>to the creditor party
+Switch->Switch:Is the transfer denominated in the currency of the amount?<br/>Yes, it is.
+Switch->Switch:Create an obligation from<br/>the debtor party to<br/>the party named in the dependency (the fxp)
 Switch->fxp:SEE PATCH /fxTransfers
 fxp->fxp: Let's just check: does this match the stuff I sent?
 fxp->fxp:It does. Great. I'll clear the conversion
 fxp->Switch:200 Gotcha
-note over Switch: Ledger positions:<br/>NBS_Bank has a debit of 5000 MWK<br/>FDH_FX has a credit of 5000 MWK<br/>FDH_FX has a debit of 97 ZMW<br/>Zoona has a credit of 97 ZMW
-Switch->PayerFSP:Transfer is complete\n**PUT /transfers/c720ae14-fc72-4acd-9113-8b601b34ba4d**
+note over Switch: Ledger positions:<br/>NBS_Bank has a debit of 5731 MWK<br/>FDH_FX has a credit of 5731 MWK<br/>FDH_FX has a debit of 97 ZMW<br/>Zoona has a credit of 97 ZMW
+Switch->PayerFSP:Transfer is complete<br/>**PUT /transfers/c720ae14-fc72-4acd-9113-8b601b34ba4d**
 PayerFSP-->Switch:200 Gotcha
 PayerFSP->PayerFSP:Commit the funds in my ledgers
 PayerFSP->Amanda:Transfer was completed successfully
 
 ```
 
-
-```nano
-PayerFSP -> PayerFSP: Reserve 101 ZMK from Payer<br/>account, 100 ZMK to Switch<br/>account and 1 ZMK to<br/>fee account
-PayerFSP ->> Switch: POST /transfers<br/>(amount=100 ZMK)
-activate Switch
-Switch -->> PayerFSP: HTTP 202 (Accepted)
-Switch -> Switch: Reserve 100 ZMK from Payer FSP<br/>account to Payee FSP account
-Switch ->> PayeeFSP: POST /transfers<br/>(amount=100 ZMK)
-activate PayeeFSP
-PayeeFSP --> Switch: HTTP 202 (Accepted)
-PayeeFSP -> PayeeFSP: Transfer 100 ZMK from Switch<br/>account to Payee account, 1 ZMK<br/>from Payee to fee account
-PayeeFSP -> Payee: You have received 100 ZMK<br/>from Payer and paid 1 ZMK<br/>in internal fee. Please give<br/>goods or service to Payer.
-Payee ->> cust: Here are your goods or services
-PayeeFSP ->> Switch: PUT /transfers/<ID>
-Switch -->> PayeeFSP: HTTP 200 (OK)
-deactivate PayeeFSP
-Switch -> Switch: Commit reserved transfer
-Switch ->> PayerFSP: PUT /transfers/<ID>
-PayerFSP -->> Switch: HTTP 200 (OK)
-deactivate Switch
-PayerFSP -> PayerFSP: Commit reserved transfer
-PayerFSP ->> cust : Payment successful, you<br/>have paid 100 ZMK to Payee<br/>plus 1 ZMK in fees
-deactivate PayerFSP
-```
 
 ### Comments
 
@@ -500,7 +442,7 @@ POST /transfers
         , "payerFsp": "NBS_Bank"
         , "amount": {
             "currency": "MWK"
-            , "amount": "5000"
+            , "amount": "5731"
         }
         , "transaction": {
             "transactionId": "d9ce59d4-3598-4396-8630-581bb0551451"
@@ -542,7 +484,7 @@ POST /fxTransfers
         , "respondingfxp": "FDH_FX"
         , "sourceAmount": {
             "currency": "MWK",
-            "amount": "5000"
+            "amount": "5731"
         }
         , "targetAmount": {
             "currency": "ZMW",
