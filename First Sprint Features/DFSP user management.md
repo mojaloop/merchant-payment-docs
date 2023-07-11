@@ -4,7 +4,7 @@
 
 **As a** super admin of DFSP, **I want** to be able to delete an existing user from my DFSP organization **so that** deleted user cannot be able to access the portal.  
 
-**As a** super admin of DFSP, **I want** to be able to reassign role of an existing users from my DFSP organization **so that** newly assigned user can start peroforming action available to new role.  
+**As a** super admin of DFSP, **I want** to be able to reassign role of an existing users from my DFSP organization **so that** newly assigned user can start performing action available to new role.  
 
  
 
@@ -14,7 +14,7 @@
     * Super Admin
         * assigned by Hub user
         * assign roles and create roles
-        * view records and reports of eveery records in related DFSP
+        * view records and reports of every records in related DFSP
     * Maker 
         * add new merchant records
         * edit existing merchant records

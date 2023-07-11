@@ -6,9 +6,9 @@ As a DFSP maker, I want to register simple merchant to the acquirer system with 
 * Simple merchant can be identified as following criteria
     * Merchant with single location/single checkout counter, single payintoID, account and contact person. 
 * After submitting the merchant form, system will notify to DFSP checker to check the form. 
-    * until, DFSP checker has approved/rejected the form, Registration Status of particular merchant will be "Pending" 
-    * After DFSP checker has approved/rejected the form, " the registration status will be changed to " Approved", "Rejected" 
-    * Approved merchants records from acquiring system will be reflected to the Registry system. 
+    * until DFSP checker has approved/rejected the form, Registration Status of particular merchant will be "Pending" 
+    * After DFSP checker has approved/rejected the form, " the registration status " will be changed to " Approved", "Rejected" 
+    * Approved merchant records from acquiring system will be reflected to the Registry system. 
 * following data points will be captured in the acquiring step. 
     * Business information  
         * Doing Business As Name  [Single line, Requried]

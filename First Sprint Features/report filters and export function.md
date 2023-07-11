@@ -1,5 +1,5 @@
 ## Report filters
-**As a** DFSP user, **I want to** be able to filtered out records from each reports based on my selected criterias. 
+**As a** DFSP user, **I want to** be able to filter out records from each report based on my selected criteria. 
 ### Acceptance Criteria
 * following filters should be available in all reports. 
     * added by 
@@ -10,14 +10,14 @@
     * Merchant ID
     * Payinto ID
     * Registration status
-* Multiple filters should be able to selected at once. 
-    * example added by "xxx" AND updated time "hh:mm dd/mm/yyyy"
-* When user has clicked "clear filter" button, reset the value to null in each filter and all data should be reflected to the tables. 
+* Multiple filters should be able to select at once. 
+    * example ==> added by "xxx" AND updated time "hh:mm dd/mm/yyyy"
+* When the user clicks the "Clear Filter" button, the values in each filter should be reset to null, and all data should be reflected in the tables. 
 
 ## Report download
-**As a** DFSP user, **I want to** be able to download filtered out records from each reports based on my selected criteria. 
+**As a** DFSP user, **I want to** be able to download filtered records from each report based on my selected criteria. 
 ### Acceptance Criteria
-* reports should be dowonloadable by following formats
+* reports should be downloadable by following formats
     * csv
     * pdf
     * excel
