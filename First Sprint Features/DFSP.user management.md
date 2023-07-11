@@ -14,7 +14,7 @@
     * Super Admin
         * assigned by Hub user
         * assign roles and create roles
-        * view records and reports of every records in related DFSP
+        * view records and reports of every record in related DFSP
     * Maker 
         * add new merchant records
         * edit existing merchant records
@@ -39,4 +39,3 @@
                     * registered merchants
                     * rejected merchants
                 * Approve/reject newly added merchants
-                * 

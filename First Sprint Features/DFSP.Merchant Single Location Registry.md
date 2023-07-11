@@ -11,55 +11,55 @@ As a DFSP maker, I want to register simple merchant to the acquirer system with 
     * Approved merchant records from acquiring system will be reflected to the Registry system. 
 * following data points will be captured in the acquiring step. 
     * Business information  
-        * Doing Business As Name  [Single line, Requried]
-        * Registered Name [Single line, Not Requried]
+        * Doing Business As Name  [Single line, Required]
+        * Registered Name [Single line, Not Required]
         * Payinto Account
-        * number of employee [Dropdown, Requried]
+        * number of employee [Dropdown, Required]
             * 0-5 
             * 6-10 
             * 11-50 
             * 51-100 
             * 100++ 
-        * monthly turn over [Dropdown, Requried]
-        * merchant category [Dropdown, Not Requried]
+        * monthly turn over [Dropdown, Required ]
+        * merchant category [Dropdown, Not Required ]
             * Individual
             * Small Shop
             * Chain Store
-        * Registered DFSP name [Dropdown, Not Requried] 
+        * Registered DFSP name [Dropdown, Not Required ] 
             * Populated from DFSP table
     * Location information 
-    * Location type  [Dropdown, Requried] 
+    * Location type  [Dropdown, Required ] 
         * Virtual  
         * Physical  
-    * Country [dropdown ,Not Requried]  
-    * State [dropdown ,Not Requried] //remark : state list should be reflected to chosen country 
-    * City[dropdown ,Not Requried] // remark : city list should be reflected to chosen state 
-    * Longitude Latitude [Not Requried] 
-    * Website URL [Not Requried] 
+    * Country [dropdown ,Not Required ]  
+    * State [dropdown ,Not Required ] //remark : state list should be reflected to chosen country 
+    * City[dropdown ,Not Required ] // remark : city list should be reflected to chosen state 
+    * Longitude Latitude [Not Required ] 
+    * Website URL [Not Required ] 
     * Full address [free text] // need to update according to ERD
     * Check out counter description[ to display in customer app/ussd] [single line, Required]
 * Business owner information 
     * Name  
     * National ID  
-    * Nationality [dropdown, Requried] 
+    * Nationality [dropdown, Required ] 
     * Physical Address  [visual - sub group]
-        * Department [Not Requried]
-        * Sub Department [Not Requried]
-        * Street Name [Not Requried]
-        * Building Number [Not Requried]
-        * Building Name [Not Requried]
-        * Floor Number [Not Requried]
-        * Room Number [Not Requried]
-        * Post Box [Not Requried]
-        * Postal Code [Not Requried]
-        * Township [Not Requried]
-        * District [Not Requried]
-        * Country Subdivision(State/division) [Not Requried]
-        * Country  [Dropdown, Requried]
-        * Longitude [Not Requried]
-        * Latitude [Not Requried]
-    * Phone number [phone number, Requried]
-    * Email [Not Requried] 
+        * Department [Not Required ]
+        * Sub Department [Not Required ]
+        * Street Name [Not Required ]
+        * Building Number [Not Required ]
+        * Building Name [Not Required ]
+        * Floor Number [Not Required ]
+        * Room Number [Not Required ]
+        * Post Box [Not Required ]
+        * Postal Code [Not Required ]
+        * Township [Not Required ]
+        * District [Not Required ]
+        * Country Subdivision(State/division) [Not Required ]
+        * Country  [Dropdown, Required ]
+        * Longitude [Not Required ]
+        * Latitude [Not Required ]
+    * Phone number [phone number, Required ]
+    * Email [Not Required ] 
 * Contact person  
     * //Remark==> condition : if user click: same as business owner, copy business owner information into contact person 
     * Name  
