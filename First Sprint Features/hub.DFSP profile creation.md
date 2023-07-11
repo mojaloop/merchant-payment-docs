@@ -13,7 +13,7 @@
 * Disabled DFSP will not be able to update merchants list, or any other actions. Merchants from disabled DFSP won’t be able to participate in mojaloop system.  
 
 
-## Adding default user admin user for DFSP 
+## Adding default super admin user for DFSP 
 
 **As a** hub user, **I want to** add default super admin user for onboarded DFSP, **so that** they can start managing merchant acquiring system.  
 
