@@ -12,3 +12,6 @@
     * If there is no failed record, only "OK" button will be there. 
     * If there are any failed records, "See more" button will be there where user can click to see details of failed records. 
     * If user click "see more" button , show details of that failed record in table form with pop up window.
+
+## Design File
+* [Bulk input](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=1435%3A7881&type=design&node-id=1517-10353&viewport=528%2C298%2C0.35&t=3AEfehrhNBILWl7q-1&scaling=scale-down&starting-point-node-id=1517%3A10353&show-proto-sidebar=1&mode=design)

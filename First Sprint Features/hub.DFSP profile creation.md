@@ -19,4 +19,4 @@
 
 ### Acceptance Criteria 
 
-* Default DFSP user admin user will be able to add new DFSP users, manage merchant lists and all other actions that are available to the DFSP.  
+* Default DFSP  admin user will be able to add new DFSP users, manage merchant lists and all other actions that are available to the DFSP.  

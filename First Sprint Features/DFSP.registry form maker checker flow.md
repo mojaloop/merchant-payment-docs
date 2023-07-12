@@ -9,3 +9,6 @@
         * notification message : " username XXX has rejected xxx records". 
     * When DFSP checker has approved the records, the data should be reflected to Merchant Registry oracle system and perform alias generation process.[alias generation process will be added after alias generation flows have been finalized] 
     * When maker clicks those notifications, maker can see details of the records, in case of rejected records, makers will see the record details along with rejection reason. 
+
+## Design file
+* [Maker_Checker](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=1435%3A7881&type=design&node-id=1504-14308&viewport=528%2C298%2C0.35&t=3AEfehrhNBILWl7q-1&scaling=scale-down&starting-point-node-id=1517%3A10353&show-proto-sidebar=1)

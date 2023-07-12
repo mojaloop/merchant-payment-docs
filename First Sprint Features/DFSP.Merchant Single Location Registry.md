@@ -73,3 +73,6 @@ As a DFSP maker, I want to register simple merchant to the acquirer system with 
     * License number 
     * License document [field type : file] 
     * Reference CSV format should be able to downloaded  
+
+## Design file 
+* [registration form](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=1435%3A7881&type=design&node-id=1435-15900&viewport=528%2C298%2C0.35&t=3AEfehrhNBILWl7q-1&scaling=scale-down&starting-point-node-id=1517%3A10353&show-proto-sidebar=1&mode=design)

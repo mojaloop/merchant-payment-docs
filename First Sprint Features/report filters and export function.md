@@ -21,3 +21,6 @@
     * csv
     * pdf
     * excel
+
+## Design file
+* [report_filter](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=1435%3A7881&type=design&node-id=1435-8023&viewport=528%2C298%2C0.35&t=3AEfehrhNBILWl7q-1&scaling=scale-down&starting-point-node-id=1435%3A8023&show-proto-sidebar=1)
