@@ -27,9 +27,14 @@ As we are creating a merchant, it's locations and tills, we would need to consid
 
 We will assume our customer is in Malawi, and our merchant is in Zambia.
 
+The transaction will be for 100 ZMK, with an exchange rate of 1 ZMK equal to 57.31 MWK.
+
+It is anticipated that a dedicated "cross border payment" could exist in a USSD menu structure, and the sender would select the currency that the merchant is accepting.
+
+Depending on the merchant implementation, an additional step of entering the Checkout Counter ID might be required.
+
 As the merchant will be displaying their price in the transacting currency, it will be necessary to send a "receive" request, to ensure that the merchant gets the price expected.
 
-The transaction will be for 100 ZMK, with an exchange rate of 1 ZMK equal to 57.31 MWK.
 The Merchant FSP will charge 1ZMK for the merchant transaction.
 
 ### Data exposed by Merchant Registry
@@ -53,7 +58,7 @@ The Merchant FSP will charge 1ZMK for the merchant transaction.
 | Name of Merchant        | ABC Store              |
 | Location                | {full address}         |
 
-### Finding DFSP that maintains this Merchant ID
+## Finding DFSP that maintains this Merchant ID
 
 ```mermaid
 sequenceDiagram
@@ -68,40 +73,54 @@ participant Switch as Switch
 participant ALS as Account<br/>Lookup<br/>Service
 participant oracle as Merchant<br/>Registry
 participant PayeeFSP as Merchant's<br/>DFSP
+participant macq as Merchant<br/>Acquiring<br/>System
 actor merc as Small Merchant
 
 # start flow
 cust->>merc: I would like to buy<br/>these goods or services
 merc ->> cust: The goods or service cost<br/>ZMK 100 before any fees,<br/>please send me the money, by initiating the transaction
-note over cust,PayerFSP: Question 1<br/>On a USSD flow, how do I add<br/>a counter when I have a Merchant ID?
-note over cust,PayerFSP: Question 2<br/>On a USSD flow, how do I add<br/>an alternative currency?
 rect rgb(100, 100, 100)
+    note over cust: Select Cross Border Merchant Payment Option
+    note over cust: Enter Merchant "PayIntoID"
+    note over cust: Enter Amount to Pay "100"
+    note over cust: Select Currency to Pay "ZMK"
     cust ->> PayerFSP: I would like Merchant ID 12345678 <br/>to receive ZMK 100
     activate PayerFSP
-    note over cust:Customer Participant<br/>Merchant Alias<br/>[PayIntoID](12345678)
+    note over cust: Enter Till Number<br/>Till Number<br/>[CheckOutCounterID](000001)
     cust ->> PayerFSP : Pay CheckOutCounterID [000001]
-    note over cust:Customer provides<br/>Till Number<br/>[CheckOutCounterID](000001)
 end
 
 PayerFSP ->> PayerFSP: 12345678 is not<br/>within this system
-PayerFSP ->> Switch: GET /parties/Merchant/12345678
+PayerFSP ->> Switch: GET /parties/Merchant/12345678<br/>?currency={"ZMK"}
 activate Switch
 Switch -->> PayerFSP: HTTP 202 (Accepted)
-Switch ->> ALS: GET /participants/Merchant/12345678
+deactivate PayerFSP
+Switch ->> ALS: GET /participants/Merchant/12345678<br/>?currency={"ZMK"}
 activate ALS
 ALS -->> Switch: HTTP 202 (Accepted)
-ALS ->> ALS: Lookup which FSP Merchant<br/>12345678 belongs to.
-ALS ->> Switch: PUT /participants/Merchant/12345678<br/>(Merchant's DFSP)
+deactivate Switch
+ALS ->> oracle: GET /participants/Merchant/12345678<br/>?currency={"ZMK"}
+activate oracle
+oracle ->> ALS: PUT /participants/Merchant/12345678<br/>?currency={"ZMK"}<br/>(Merchant's DFSP)
+deactivate oracle
+ALS ->> Switch: PUT /participants/Merchant/12345678<br/>?currency={"ZMK"}<br/>(Merchant's DFSP)
+activate Switch
 Switch -->> ALS: HTTP 200 (OK)
 deactivate ALS
-Switch ->> PayeeFSP: GET /parties/Merchant/12345678
+Switch ->> PayeeFSP: GET /parties/Merchant/12345678<br/>?currency={"ZMK"}
 activate PayeeFSP
 PayeeFSP -->> Switch: HTTP 202 (Accepted)
-PayeeFSP -> PayeeFSP: Lookup party information<br/>for 12345678
-PayeeFSP ->> Switch: SEE PUT /parties/Merchant/12345678
+deactivate Switch
+PayeeFSP ->> macq: GET /parties/Merchant/12345678<br/>?currency={"ZMK"}
+activate macq
+macq ->> PayeeFSP: SEE PUT /parties/Merchant/12345678<br/>?currency={"ZMK"}
+deactivate macq
+PayeeFSP ->> Switch: SEE PUT /parties/Merchant/12345678<br/>?currency={"ZMK"}
+activate Switch
 Switch -->> PayeeFSP: HTTP 200 (OK)
 deactivate PayeeFSP
-Switch ->> PayerFSP: SEE PUT /parties/Merchant/12345678
+Switch ->> PayerFSP: SEE PUT /parties/Merchant/12345678<br/>?currency={"ZMK"}
+activate PayerFSP
 PayerFSP -->> Switch: HTTP 200 (OK)
 deactivate Switch
 PayerFSP ->> cust: Is "ABC Store" correct?
@@ -131,11 +150,9 @@ PUT /parties
     }
 ```
 
-### Open Questions
+### Open Question
 
-- What if a DFSP has more than one receive currency? In a Smart Phones, I would expect a selection, but how would this work in USSD?
-- Extend that problem to consider a merchant account that can receive multiple currencies.
-- In a retail transaction, a customer would see a price in a foreign currency - but we need to get that in to a USSD flow somehow, how does the consumer enter correct currency? (whatever is proposed needs to factor the above scenarios)
+- As we have considered a currency selection process we are not considering a merchant account that can receive multiple currencies, nor are we considering a consumer account that can send multiple currencies. Does this create an edge case?
 
 ### Quotes
 
@@ -155,15 +172,17 @@ participant PayeeFSP as Merchant's<br/>DFSP
 actor merc as Small Merchant
 
 # start flow
-cust->>merc: I would like to buy<br/>this goods or service
-merc ->> cust: The goods or service cost<br/>100 ZMK before any fees,<br/>please initiate the transaction
-
+cust->>merc: I would like to buy<br/>these goods or services
+merc ->> cust: The goods or service cost<br/>ZMK 100 before any fees,<br/>please send me the money, by initiating the transaction
 rect rgb(100, 100, 100)
+    note over cust: Select Cross Border Merchant Payment Option
+    note over cust: Enter Merchant "PayIntoID"
+    note over cust: Enter Amount to Pay "100"
+    note over cust: Select Currency to Pay "ZMK"
     cust ->> PayerFSP: I would like Merchant ID 12345678 <br/>to receive ZMK 100
     activate PayerFSP
-    note over cust:Customer Participant<br/>Merchant Alias<br/>[PayIntoID](12345678)
-    cust ->> PayerFSP : Pay Till No [Till_ID]
-    note over cust:Customer provides<br/>Till Number<br/>[CheckOutCounterID](000001)
+    note over cust: Enter Till Number<br/>Till Number<br/>[CheckOutCounterID](000001)
+    cust ->> PayerFSP : Pay CheckOutCounterID [000001]
 end
 PayerFSP ->> PayerFSP: Lookup 12345678 (outlined above)
 PayerFSP ->> Switch: POST /quotes<br/>(amountType=RECEIVE,<br/>amount=100 ZMK)
@@ -201,9 +220,9 @@ PayerFSP -->> Switch:: HTTP 200 (OK)
 
 #### Commentary
 
-During the FX Quote, the FXP can add a fee, they will then set an expiry time and sign the quotation object, create an ILPV4 prepare packet and return it in the intermediary object.
+During the FX Quote, the FXP can add a fee, they will then set an expiry time and sign the quotation object, create an ILP prepare packet and return it in the intermediary object.
 
-> :exclamation: NOTE: the ILPV4 prepare packet contains the following items, all encoded:  
+> :exclamation: NOTE: the ILP prepare packet contains the following items, all encoded:  
 >  
 > - The amount being sent (i.e. in the source currency)  
 > - An expiry time  
@@ -211,13 +230,14 @@ During the FX Quote, the FXP can add a fee, they will then set an expiry time an
 > - The name of the fxp  
 > - The content of the conversion terms  
 
+The Services FXP - will include the desired currency pair in the GET /services/FXP (some currency flows are unidirectional and some require a staging currency). This is not addressed in this document.
+
+When the Payee DFSP receives the Service response, it can request quotes from all parties that provide the service pairs.
 
 ### Questions  
 
 - I am reviewing the quotes, and currently I can only see one currency. So in the receive scenario above, the receiving DFSP would get a message saying please accept 100 ZMK. I cannot see where you would say, "but I will send in a currency you need to convert as I am sending in MWF". The receiving DFSP would say great - send it over
-- On the Services FXP - are you envisioning the GET /services/FXP to include the desired currency pair (working through that some currency flows are unidirectional and some require a staging currency).
 - Or do you see the response to say - FDH FX offers the following Currency Pairs and corridors
-- When the Payee DFSP receives the Service response, I assume it might get quotes from all that provide the service pairs. Is that correct?
 
 I see we have a POST fxQuote but a PUT fxQuotes - should they not be the same?
 
