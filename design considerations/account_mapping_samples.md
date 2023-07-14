@@ -36,6 +36,8 @@ The design considers whether the receiving account is mapped to a Merchant (Merc
 
 This allows us to create the following sample data for each of these merchants.
 
+It is worth noting that in a USSD flow - the PayIntoID has to consider data entry, so it may consider a number system.
+
 | **Merchant ID** | **Merchant Name** | **PayIntoID (Alias)** | **CheckOutCounter_ID** | **DFSP_ID** | **Account** | **Contact Number** |
 |-----------------|-------------------|-----------------------|------------------------|-------------|--------------|--------------------|
 | **M001**        | 001 Store         | M001                  | C001                   | DFSP1       | A123         |                    |

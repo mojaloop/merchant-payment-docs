@@ -3,16 +3,156 @@
 
 title Transferring with Currency Conversion\nPayee DFSP requests conversion
 
-actor "Upile Chisala" as cust
-participant "NBS\nBank" as PayerFSP
-participant "FDH FX" as fxp
-participant "Switch" as Switch
-participant "Zoona" as PayeeFSP
+actor "Upile Chisala" as A1
+participant "NBS\nBank" as D1
+participant "FDH FX" as FXP
+participant "Switch" as S1
+participant "Zoona" as D2
 participant ALS
 autonumber
 
+A1->D1:I'd like to send 5000 MWK\nto Mulenga Kapwepwe, please
+== Discovery Phase ==
+activate D1
+D1->S1:I want to send to MSISDN 260795390415\n**GET /parties/MSISDN/260795390415**
+activate S1
+S1- ->D1:202 I'll get back to you
+deactivate D1
+S1->ALS:Who owns MSISDN 260795390415?
+activate ALS
+ALS- ->S1:It's Zoona
+deactivate ALS
+S1->D2:Do you own MSISDN 260795390415?
+activate D2
+D2- ->S1:202 I'll get back to you
+deactivate S1
+D2->S1:Yes, it's Mulenga Kapwepwe. She can receive in ZMW\n**PUT /parties/MSISDN/260795390415**
+note over D2
 
-note over fxp
+    PUT /parties
+
+    "party": {
+    "partyIdInfo": {
+    "partyIdType": "MSISDN",
+    "partyIdentifier": "260795390415"
+    },
+    "name": "Mulenga Kapwepwe",
+    "receiveCurrencies":[
+    "ZMW"
+    ]
+    }
+end note
+activate S1
+S1- ->D2:200 Gotcha
+deactivate D2
+S1->D1:Yes, it's Mulenga Kapwepwe. She can receive in ZMW\n**PUT /parties/MSISDN/260795390415**
+activate D1
+D1- ->S1:200 Gotcha
+deactivate S1
+
+== Agreement Phase ==
+
+D1->D1:I'll leave Mulenga's DFSP\nto do the currency conversion
+D1->S1:Please quote for a transfer which sends 5000 MWK.\n**POST /quotes**
+note over D1
+
+    POST /quotes
+
+    {
+        "quoteId": "382987a8-75ce-4037-b500-c475e08c1727"
+        ,"transactionId": "d9ce59d4-3598-4396-8630-581bb0551451"
+        , "payee": {
+            "partyIdInfo": {
+            "partyIdType": "MSISDN"
+            , "partyIdentifier": "260795390415"
+            }
+        }
+        , "payer": {
+            "partyIdInfo": {
+                "partyIdType": "MSISDN"
+                , "partyIdentifier": "265314118010"
+            }
+        },
+        "amountType": "SEND"
+        , "amount": {
+            "currency": "MWK"
+            , "amount": "5000"
+        },
+        "converter": "PAYEE"
+        , "transactionType": {
+            "scenario": "TRANSFER"
+            , "initiator": "PAYER"
+            , "initiatorType": "CONSUMER"
+        }
+    }
+
+end note
+activate S1
+S1- ->D1:202 I'll get back to you
+deactivate D1
+S1->D2:Please quote for a transfer which sends 5000 MWK.\n**POST /quotes**
+activate D2
+D2- ->S1:202 I'll get back to you
+deactivate S1
+
+== Currency conversion ==
+
+D2->D2:Hmmm. I'll need to get some currency conversion
+
+D2->S1:What FXPs do you know about?\n**GET /services/FXP**
+activate S1
+S1- ->D2:202 I'll get back to you
+deactivate D2
+S1->ALS:What FXPs do you know about?
+activate ALS
+ALS- ->S1:FDH FX
+deactivate ALS
+S1->D2:Here are the available FXPs:FDH FX
+note over S1
+
+    PUT /services/FXP
+
+    "fxpProviders": [
+    "FDH FX"
+    ]
+end note
+activate D2
+D2- ->S1:200 Gotcha
+deactivate S1
+D2->D2:I'll ask FDH FX to perform my conversion
+
+D2->S1:Here is the initial version of the transfer.\nPlease quote me for the currency conversion.
+note over D2
+
+    **post /fxQuotes**
+
+    {
+    "conversionRequestId": "828cc75f-1654-415e-8fcd-df76cc9329b9"
+    , "conversion": {
+        "conversionId": "581f68ef-b54f-416f-9161-ac34e889a84b",
+        , "counterPartyFsp": "FDH_FX"
+        , "amountType": "SEND"
+        , "sourceAmount": {
+            "currency": "MWK"
+            , "amount": "5000"
+        }
+        , "targetAmount": {
+            "currency": "ZMW"
+        }
+        , "validity": "2021-08-25T14:17:09.663+01:00"
+    }
+    }
+
+end note
+activate S1
+S1- ->D2:202 I'll get back to you
+deactivate D2
+S1->FXP:Here is the initial version of the transfer.\nPlease quote me for the currency conversion.\n**POST /fxQuote**
+activate FXP
+FXP- ->S1:202 I'll get back to you
+deactivate S1
+FXP->FXP:OK, so I need to figure this out...
+note over FXP
 
     I will add a 150 MWK fee for undertaking the conversion.
     Now I'll set an expiry time, sign the quotation object,
@@ -22,7 +162,7 @@ note over fxp
     - The amount being sent (i.e. in the source currency)
     - An expiry time
     - The condition
-    - The name of the fxp
+    - The name of the FXP
     - The content of the conversion terms
 
     ** PUT /fxQuotes/828cc75f-1654-415e-8fcd-df76cc9329b9**
@@ -56,19 +196,19 @@ note over fxp
         }
     }
 end note
-fxp->Switch:Here's the signed conversion object
-activate Switch
-Switch-->fxp:200 Gotcha
-deactivate fxp
-Switch->PayeeFSP:Here's the signed conversion object\n**PUT /fxQuotes/828cc75f-1654-415e-8fcd-df76cc9329b9**
-activate PayeeFSP
-PayeeFSP-->Switch:Gotcha
-deactivate Switch
+FXP->S1:Here's the signed conversion object
+activate S1
+S1- ->FXP:200 Gotcha
+deactivate FXP
+S1->D2:Here's the signed conversion object\n**PUT /fxQuotes/828cc75f-1654-415e-8fcd-df76cc9329b9**
+activate D2
+D2- ->S1:Gotcha
+deactivate S1
 
 
-PayeeFSP->PayeeFSP:OK, so I will charge 2 ZMW for this.\nNow I sign the transaction object\nand return it to the Debtor DFSP
-PayeeFSP->Switch:Here's the signed quote
-note over PayeeFSP
+D2->D2:OK, so I will charge 2 ZMW for this.\nNow I sign the transaction object\nand return it to the Debtor DFSP
+D2->S1:Here's the signed quote
+note over D2
 
     **put /quotes/382987a8-75ce-4037-b500-c475e08c1727**
 
@@ -121,21 +261,21 @@ note over PayeeFSP
     }
 
     end note
-    activate Switch
-    Switch-->PayeeFSP:200 Gotcha
-    deactivate PayeeFSP
-    Switch->PayerFSP:Here's the signed quote\n**PUT /quotes/382987a8-75ce-4037-b500-c475e08c1727**
-    activate PayeeFSP
-    PayerFSP-->Switch:200 Gotcha
-    deactivate Switch
-    PayerFSP->PayerFSP:OK, I can see that there are going to be 5 ZMW in charges.
-    PayerFSP->cust:Hi, Upile: I can do the transfer.\nIt'll cost you 250 MWK in fees\nand Mulenga Kapwepwe will receive\n95 ZMW.\nLet me know if you want to go ahead
-    cust-->PayerFSP:Great! Yes please, go ahead
+    activate S1
+    S1- ->D2:200 Gotcha
+    deactivate D2
+    S1->D1:Here's the signed quote\n**PUT /quotes/382987a8-75ce-4037-b500-c475e08c1727**
+    activate D2
+    D1- ->S1:200 Gotcha
+    deactivate S1
+    D1->D1:OK, I can see that there are going to be 5 ZMW in charges.
+    D1->A1:Hi, Upile: I can do the transfer.\nIt'll cost you 250 MWK in fees\nand Mulenga Kapwepwe will receive\n95 ZMW.\nLet me know if you want to go ahead
+    A1- ->D1:Great! Yes please, go ahead
 
     == Transfer Phase ==
 
-    PayerFSP->Switch:Please do the transfer
-    note over PayerFSP
+    D1->S1:Please do the transfer
+    note over D1
 
     POST /transfers
 
@@ -173,26 +313,26 @@ note over PayeeFSP
     }
 
     end note
-    activate Switch
-    Switch-->PayerFSP:202 I'll get back to you
-    deactivate PayerFSP
-    Switch->Switch:Does the debtor hold an account in MWK? Yes.
-    Switch->Switch:Make the reservation against their account.
-    note over Switch
+    activate S1
+    S1- ->D1:202 I'll get back to you
+    deactivate D1
+    S1->S1:Does the debtor hold an account in MWK? Yes.
+    S1->S1:Make the reservation against their account.
+    note over S1
 
     Reservations:
 
     NBS_Bank has a reservation of 5000 MWK
 
     end note
-    Switch->PayeeFSP:Please do the transfer\n**POST /transfers**
-    activate PayeeFSP
-    PayeeFSP-->Switch:202 I'll get back to you
-    deactivate Switch
+    S1->D2:Please do the transfer\n**POST /transfers**
+    activate D2
+    D2- ->S1:202 I'll get back to you
+    deactivate S1
 
-    PayeeFSP->PayeeFSP:Do I need to activate currency conversion?\nYes, I do
-    PayeeFSP->Switch:Please confirm your part of the transfer
-    note over PayeeFSP
+    D2->D2:Do I need to activate currency conversion?\nYes, I do
+    D2->S1:Please confirm your part of the transfer
+    note over D2
 
     **POST /fxTransfers**
 
@@ -200,7 +340,7 @@ note over PayeeFSP
         "commitRequestId": "77c9d78d-c26a-4474-8b3c-99b96a814bfc"
         , "relatedTransactionId": "d9ce59d4-3598-4396-8630-581bb0551451"
         , "requestingFsp": "Zoona"
-        , "respondingfxp": "FDH_FX"
+        , "respondingFxp": "FDH_FX"
         , "sourceAmount": {
             "currency": "MWK",
             "amount": "5000"
@@ -212,13 +352,13 @@ note over PayeeFSP
         , "condition": "bdbcf517cfc7e474392935781cc14043602e53dc2e8e8452826c5241dfd5e7ab"
     }
     end note
-    activate Switch
-    Switch-->PayeeFSP:202 I'll get back to you
-    deactivate PayeeFSP
-    Switch->Switch:OK, so this is an FX confirmation.
-    Switch->Switch: Does the sender have an account in this currency?\nNo, it doesn't.
-    Switch->Switch: Liquidity check and reserve on fxp's account
-    note over Switch
+    activate S1
+    S1- ->D2:202 I'll get back to you
+    deactivate D2
+    S1->S1:OK, so this is an FX confirmation.
+    S1->S1: Does the sender have an account in this currency?\nNo, it doesn't.
+    S1->S1: Liquidity check and reserve on FXP's account
+    note over S1
 
     Reservations:
 
@@ -227,13 +367,13 @@ note over PayeeFSP
 
     end note
 
-    Switch->fxp:Please confirm the currency conversion part of the transfer\n** POST /fxTransfers**
-    activate fxp
-    fxp-->Switch:202 I'll get back to you
-    deactivate Switch
-    fxp->fxp:Is all this OK?\nIf so, send the fulfilment back
-    fxp->Switch:Confirmed. Here's the fulfilment
-    note over fxp
+    S1->FXP:Please confirm the currency conversion part of the transfer\n** POST /fxTransfers**
+    activate FXP
+    FXP- ->S1:202 I'll get back to you
+    deactivate S1
+    FXP->FXP:Is all this OK?\nIf so, send the fulfilment back
+    FXP->S1:Confirmed. Here's the fulfilment
+    note over FXP
 
     **PUT /fxTransfers/77c9d78d-c26a-4474-8b3c-99b96a814bfc**
 
@@ -244,13 +384,13 @@ note over PayeeFSP
     }
 
     end note
-    activate Switch
-    Switch-->fxp:200 Gotcha
-    deactivate fxp
-    Switch->Switch:Check fulfilment matches and cancel if not.
+    activate S1
+    S1- ->FXP:200 Gotcha
+    deactivate FXP
+    S1->S1:Check fulfilment matches and cancel if not.
     alt Conversion failed
-    Switch->PayeeFSP:Sorry. Conversion failed
-    note over Switch
+    S1->D2:Sorry. Conversion failed
+    note over S1
 
     **PUT /fxTransfers/77c9d78d-c26a-4474-8b3c-99b96a814bfc/error**
 
@@ -262,18 +402,18 @@ note over PayeeFSP
     end note
     else Conversion succeeded
 
-    Switch->PayeeFSP:Conversion succeeded subject to transfer success\n**PUT /fxTransfers/77c9d78d-c26a-4474-8b3c-99b96a814bfc**
-    note over Switch
+    S1->D2:Conversion succeeded subject to transfer success\n**PUT /fxTransfers/77c9d78d-c26a-4474-8b3c-99b96a814bfc**
+    note over S1
 
     end note
     end
-    activate PayeeFSP
-    PayeeFSP-->Switch:200 Gotcha
-    deactivate Switch
-    PayeeFSP->PayeeFSP:Let me check that the terms of the transfer\nare the same as the ones I agreed to
-    PayeeFSP->PayeeFSP:Yes, they do. I approve the transfer
-    PayeeFSP->Switch:Transfer is confirmed, here's the fulfilment
-    note over PayeeFSP
+    activate D2
+    D2- ->S1:200 Gotcha
+    deactivate S1
+    D2->D2:Let me check that the terms of the transfer\nare the same as the ones I agreed to
+    D2->D2:Yes, they do. I approve the transfer
+    D2->S1:Transfer is confirmed, here's the fulfilment
+    note over D2
 
     **PUT /transfers/c720ae14-fc72-4acd-9113-8b601b34ba4d**
 
@@ -285,17 +425,17 @@ note over PayeeFSP
 
 
     end note
-    activate Switch
-    Switch-->PayeeFSP:200 Gotcha
-    deactivate PayeeFSP
-    Switch->Switch:
-    Switch->Switch:Is there a dependent transfer?\nYes, there is.
-    Switch->Switch:Is this dependency against the debtor party to the transfer?\nNo, it isn't.
-    Switch->Switch:Create an obligation from\nthe party named in the dependency (the fxp)\nto the creditor party
-    Switch->Switch:Is the transfer denominated in the currency of the amount?\nYes, it is.
-    Switch->Switch:Create an obligation from\nthe debtor party to\nthe party named in the dependency (the fxp)
-    Switch->fxp:The transfer succeeded.\nYou can clear it in your ledgers
-    note over Switch
+    activate S1
+    S1- ->D2:200 Gotcha
+    deactivate D2
+    S1->S1:
+    S1->S1:Is there a dependent transfer?\nYes, there is.
+    S1->S1:Is this dependency against the debtor party to the transfer?\nNo, it isn't.
+    S1->S1:Create an obligation from\nthe party named in the dependency (the FXP)\nto the creditor party
+    S1->S1:Is the transfer denominated in the currency of the amount?\nYes, it is.
+    S1->S1:Create an obligation from\nthe debtor party to\nthe party named in the dependency (the FXP)
+    S1->FXP:The transfer succeeded.\nYou can clear it in your ledgers
+    note over S1
 
     **PATCH /fxTransfers/77c9d78d-c26a-4474-8b3c-99b96a814bfc**
 
@@ -306,12 +446,12 @@ note over PayeeFSP
     }
 
 end note
-activate fxp
-fxp->fxp:Let's just check: does this match the stuff I sent?
-fxp->fxp:It does. Great. I'll clear the conversion
-fxp->Switch:200 Gotcha
-deactivate fxp
-note over Switch
+activate FXP
+FXP->FXP:Let's just check: does this match the stuff I sent?
+FXP->FXP:It does. Great. I'll clear the conversion
+FXP->S1:200 Gotcha
+deactivate FXP
+note over S1
 
     Ledger positions:
     NBS_Bank has a debit of 5000 MWK
@@ -320,23 +460,12 @@ note over Switch
     Zoona has a credit of 97 ZMW
 
 end note
-Switch->PayerFSP:Transfer is complete\n**PUT /transfers/c720ae14-fc72-4acd-9113-8b601b34ba4d**
-activate PayerFSP
-PayerFSP-->Switch:200 Gotcha
-deactivate Switch
-PayerFSP->PayerFSP:Commit the funds in my ledgers
-PayerFSP->Amanda:Transfer was completed successfully
-deactivate PayerFSP
+S1->D1:Transfer is complete\n**PUT /transfers/c720ae14-fc72-4acd-9113-8b601b34ba4d**
+activate D1
+D1- ->S1:200 Gotcha
+deactivate S1
+D1->D1:Commit the funds in my ledgers
+D1->Amanda:Transfer was completed successfully
+deactivate D1
 
 @enduml
-
-PlantUML version 1.2022.7(Mon Aug 22 18:01:30 BST 2022)
-(GPL source distribution)
-Java Runtime: Java(TM) SE Runtime Environment
-JVM: Java HotSpot(TM) 64-Bit Server VM
-Default Encoding: Cp1252
-Language: en
-Country: GB
--->
-  </g>
-</svg>
