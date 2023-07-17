@@ -20,8 +20,10 @@ As a DFSP maker, I want to register simple merchant to the acquirer system with 
             * 11-50 
             * 51-100 
             * 100++ 
-        * monthly turn over [Dropdown, Required ]
-        * merchant category [Dropdown, Not Required ]
+        * monthly turn over [Dropdown, Required , populated from SIC merchant type table]
+        * Merchant category  [ Dropdown, Required] 
+            * [SIC merchant catagories](https://resources.companieshouse.gov.uk/sic/)
+        * merchant Type [Dropdown, Not Required ]
             * Individual
             * Small Shop
             * Chain Store
@@ -32,11 +34,23 @@ As a DFSP maker, I want to register simple merchant to the acquirer system with 
         * Virtual  
         * Physical  
     * Country [dropdown ,Not Required ]  
-    * State [dropdown ,Not Required ] //remark : state list should be reflected to chosen country 
-    * City[dropdown ,Not Required ] // remark : city list should be reflected to chosen state 
-    * Longitude Latitude [Not Required ] 
     * Website URL [Not Required ] 
-    * Full address [free text] // need to update according to ERD
+    * Physical business address [ group ]
+        * Department [Not Required ]
+        * Sub Department [Not Required ]
+        * Street Name [Not Required ]
+        * Building Number [Not Required ]
+        * Building Name [Not Required ]
+        * Floor Number [Not Required ]
+        * Room Number [Not Required ]
+        * Post Box [Not Required ]
+        * Postal Code [Not Required ]
+        * Township [Not Required ]
+        * District [Not Required ]
+        * Country Subdivision(State/division) [Not Required ]//remark : state list should be reflected to chosen country 
+        * Country  [Dropdown, Required ]
+        * Longitude [Not Required ]
+        * Latitude [Not Required ]
     * Check out counter description[ to display in customer app/ussd] [single line, Required]
 * Business owner information 
     * Name  

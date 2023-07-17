@@ -1,4 +1,4 @@
-# Simple merchant registration 
+# Simple merchant registration
 
 ## Maker Checker Assignment
 
@@ -13,8 +13,6 @@
 * If user A have added a new record, the pending records will appear in user B and user C review list. After user B start reviewing the record and user C open the same record, there should be an alert that "user B is reviewing the current record" for user C so that they can avoid double job and inconsistant approvals. User C can still review, but cannot APPROVE/REJECT the record.
 * all the users can check approved, rejected records in the system.
 * user A can check pending records, but she or he cannot take REVIEW or APPROVE/REJECT actions.
-
-
 
 ## Registry form maker checker flow
 
