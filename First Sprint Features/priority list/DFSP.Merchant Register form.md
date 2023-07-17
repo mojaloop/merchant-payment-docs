@@ -3,13 +3,17 @@
 As a DFSP maker, I want to register simple merchant to the acquirer system with 2 methods [ single form input or bulk input by excel file] so that its data can be transferred to registry system and generate alias. 
 
 ### Acceptance Criteria
+
 * Simple merchant can be identified as following criteria
     * Merchant with single location/single checkout counter, single payintoID, account and contact person. 
-* After submitting the merchant form, system will notify to DFSP checker to check the form. 
-    * until DFSP checker has approved/rejected the form, Registration Status of particular merchant will be "Pending" 
-    * After DFSP checker has approved/rejected the form, " the registration status " will be changed to " Approved", "Rejected" 
-    * Approved merchant records from acquiring system will be reflected to the Registry system. 
-* following data points will be captured in the acquiring step. 
+
+* #### Registry Form flow
+
+    * When maker click "save and proceed" button and filled out all necessary field in the first page, merchant ID will be generated and registration status will change to "Draft".
+    * everytime user click "save and proceed", the filled fields in the form will be updated in the record of generated merchant ID.
+    * After being submitted, the merchant record will be with registration status as "Review".  
+* following data points will be captured in the acquiring step.
+
     * Business information  
         * Doing Business As Name  [Single line, Required]
         * Registered Name [Single line, Not Required]
@@ -29,6 +33,8 @@ As a DFSP maker, I want to register simple merchant to the acquirer system with 
             * Chain Store
         * Registered DFSP name [Dropdown, Not Required ] 
             * Populated from DFSP table
+        * Currency [ Dropdown, Required]
+            * populated from currency table
     * Location information 
     * Location type  [Dropdown, Required ] 
         * Virtual  

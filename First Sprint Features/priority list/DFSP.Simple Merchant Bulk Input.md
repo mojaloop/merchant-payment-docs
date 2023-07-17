@@ -3,6 +3,7 @@
 **As a** DFSP maker, **I want to** add new merchant records into acquiring system by bulk input **so that** I can save more time. 
 
 ### Accpetance Criteria
+
 * following file types should be available for bulk input
     * .csv
     * .xlsx
