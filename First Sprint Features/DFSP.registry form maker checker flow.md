@@ -10,7 +10,7 @@
 * If one person has done certain actions such as add a new record or edit an existing record, the other users in the system can check the result [ updated record or newly added record] and approve or reject the action. 
 * One user can be maker and checker at the same time.The same person who is action taker CANNOT review the same records he or she modified.
 * If one person has already reviewing the modified record, it should be showing to the other checkers that the one person is currently reviewing the record.
-* If user A have added a new record, the pending records will appear in user B and user C review list. After user B start reviewing the record and user C open the same record, there should be an alert that "user B is reviewing the current record" for user C so that they can avoid double job and inconsistant approvals. User C can still review, but cannot APPROVE/REJECT the record. 
+* If user A have added a new record, the pending records will appear in user B and user C review list. After user B start reviewing the record and user C open the same record, there should be an alert that "user B is reviewing the current record" for user C so that they can avoid double job and inconsistant approvals. User C can still review, but cannot APPROVE/REJECT the record.
 * all the users can check approved, rejected records in the system.
 * user A can check pending records, but she or he cannot take REVIEW or APPROVE/REJECT actions.
 
