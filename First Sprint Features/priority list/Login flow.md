@@ -7,4 +7,4 @@
 * in current sprint, log in flow will be just for demostation purpose.
 * 2 sets of email and password will be assigned to DFSP maker and DFSP checker respectively.
 * After logining in, DFSP maker can start seeing the landing page of merchant acquiring registry screen.
-* After login, DFSP checker will be seeing pending merchant records screen so that he/she can start reviewing the records. 
+* After login, DFSP checker will be seeing pending merchant records screen so that he/she can start reviewing the records.
