@@ -60,7 +60,7 @@ As a DFSP maker, I want to register simple merchant to the acquirer system with 
       * Country  [Dropdown, Required ]
       * Longitude [Not Required ]
       * Latitude [Not Required ]
-    * Check out counter description[ to display in customer app/ussd] [single line, Required]
+    * Check out counter description[ to display in customer app/ussd] [single line, Not Required]
 * Business owner information [ group DIV name]
   * Name  
   * National ID  
