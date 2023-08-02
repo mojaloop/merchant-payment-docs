@@ -19,7 +19,7 @@ As a DFSP maker, I want to register simple merchant to the acquirer system with 
   * Business information  [ group DIV name]
     * Doing Business As Name  [Single line, Required]
     * Registered Name [Single line, Not Required]
-    * Payinto Account [ single line , not required]
+    * Payinto Account [ single line , required]
       * show information hover box ==> " payinto ID, alias is the code that your DFSP have assigned you to receive payment"
     * number of employee [Dropdown, Required]
       * 1-5 
@@ -64,7 +64,7 @@ As a DFSP maker, I want to register simple merchant to the acquirer system with 
 * Business owner information [ group DIV name]
   * Name  
   * National ID  
-  * Nationality [dropdown, Required ] 
+  * Nationality [dropdown, Required ]
   * Physical Address  [visual - sub group]
     * Department [Not Required ]
     * Sub Department [Not Required ]
