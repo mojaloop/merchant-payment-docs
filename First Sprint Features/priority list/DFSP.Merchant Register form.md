@@ -42,7 +42,6 @@ As a DFSP maker, I want to register simple merchant to the acquirer system with 
     * Location type  [Dropdown, Required ] 
       * Virtual  
       * Physical  
-    * Country [dropdown ,Not Required ]  
     * Website URL [Not Required ] 
     * Physical business address [ group ]
       * Department [Not Required ]
