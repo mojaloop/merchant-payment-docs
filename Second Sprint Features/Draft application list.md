@@ -1,4 +1,4 @@
-## Registration Save As Draft Feature
+# Registration Save As Draft Feature
 
 As a DFSP maker, I want to continue to fill out the draft applications by selecting the one for which I receive new information so that I can save time and complete that application without unnecessary steps.
 

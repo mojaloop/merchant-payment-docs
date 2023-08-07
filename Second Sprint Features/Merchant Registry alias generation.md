@@ -6,14 +6,15 @@
   * Mojaloop's merchant acquiring system with records of acquiring status "Approved"
   * DFSP with existing acquring system. 
 
-* There will be a scheduler job in Merchant Acquiring system doing following step. 
+* There will be a scheduler job in Merchant Acquiring system doing following step.
   * Fetch records from Database that are submitted by Checker.
   * Call services of Merchant Registry to authenticate and then call Register Alias.
   * RegisterAlias API will have following input parameters
     * DFSPID,
     * MerchantID
     * CheckOutCounterID
-* Merchant registry will generate Alias and return it back in API response
+    * PAYINTOID [if user submit it in acquiring form response]
+* if PAYINTOID from acquiring form is null, then Merchant registry will generate Alias and return it back in API response
   * Response Code  
   * Response Description
   * PAYINTOID
