@@ -21,6 +21,10 @@
     * Marchant_ID => 001
     * Action taken by =>D1U3
     * Action taken => Review the record
-  * In case of "Revert" 
+  * In case of "Revert"
     * D1U1, U1U2,U1U3[all of the users of the system can edit the form, ie 001 merchant record with status "REVERT" will appear in to be reverted report of all the users.]
     * After D1U1/D1U2 resubmit the form, the other users who do not make final submission of the form can check the form and continue the approval process.
+
+| Error Message | Condition | Screen |
+|----------|----------|----------|
+| You cannot be as checker for the record you have updated as a maker | when user try to check the record he has updated (maker= login user while he is trying to take "approve" action) | Approval screen |
