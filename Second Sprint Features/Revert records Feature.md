@@ -1,0 +1,16 @@
+# Revert record Feature
+
+As a DFSP maker, I want to continue to fill out the revert form applications by selecting the one for which I receive new information so that merchant data can be updated and continue to Alias generation process. 
+
+## Acceptance Criteria
+
+* Revert records =merchant records with Status =REVERT and DFSP_ID=login user's DFSP ID.
+* User will be able to select "Revert" form application by selecting the filter of status as "Revert".
+* When the user clicks the "View detail" button, all of the data that has been filled out in the merchant registry form is shown in order.
+* When the user clicks the "Proceed" button, the old data of the application will be reloaded, and the user can start editing the out the form..
+* After first edit, the status of the record will be changed to "Draft".
+* only after final "submission", the status of the record will change to "Review" and maker name will be updated with final maker who submitted the form. 
+
+## Design File
+
+* [save_as_draft_merchant_records_table](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=1435%3A7881&type=design&node-id=1865-10059&viewport=417%2C2269%2C0.3&t=JLfMpLlDsQxIs2Um-1&scaling=scale-down&starting-point-node-id=1865%3A10059&show-proto-sidebar=1)
