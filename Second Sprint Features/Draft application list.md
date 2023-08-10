@@ -4,13 +4,15 @@ As a DFSP maker, I want to continue to fill out the draft applications by select
 
 ## Acceptance Criteria
 
-* The "continue saved draft application" button will be disabled when there is no draft application. 
+* The "continue saved draft application" button will be disabled when there is no draft application.
 * If the draft applications are more than one, the number of records will be shown at the top right corner of the button.
 * When the user clicks the "continue saved draft application" button, the draft applications will be shown in a table.
 * In the table, the record with status "DRAFT" that has been filled out in the merchant registry form is shown.
 * When the user clicks the "View detail" button, all of the data that has been filled out in the merchant registry form is shown in order.
 * When the user clicks the "Proceed" button, the work-in-progress of the saved draft will be reloaded, and the user can continue filling out the form.
-* As long as status is in "DRAFT", the records will be shown in Draft table even though DFSP maker update the form second or third time. 
+* As long as status is in "DRAFT", the records will be shown in Draft table even though DFSP maker update the form second or third time.
+* __Draft count calculation__
+  * Draft count = number of record where Status =Draft and DFSP_ID=login user's DFSP ID
 
 ## Design File
 
