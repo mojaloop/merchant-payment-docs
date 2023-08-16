@@ -10,6 +10,8 @@ As a DFSP maker, I want to continue to fill out the revert form applications by 
 * When the user clicks the "Proceed" button, the old data of the application will be reloaded, and the user can start editing the out the form..
 * After first edit, the status of the record will be changed to "Draft".
 * only after final "submission", the status of the record will change to "Review" and maker name will be updated with final maker who submitted the form. 
+* [all of the users of the system can edit the form, ie 001 merchant record with status "REVERT" will appear in to be reverted report of all the users.]
+* After resubmitting the form, the other users who do not make final submission of the form can check the form and continue the approval process.
 
 ## Design File
 
