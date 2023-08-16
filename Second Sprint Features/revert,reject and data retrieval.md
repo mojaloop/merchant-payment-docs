@@ -1,21 +1,25 @@
- ## Non-happy path for checker [revert, reject] 
+# Non-happy path for checker [revert, reject] 
+
  **As a** DFSP checker,  **I want to** see “To be Reverted Report” and “Rejected Merchant Report” **so that** I can check easily which reports have been reverted and which were rejected.  
 
 ## Acceptance Criteria 
+
 * To be Reverted Report
-    * After one checker has already changed the records to be reverted from the pending merchant records, those records will appear in the “To be Reverted Report,” and the registration status will be changed to reverted. 
-    * Makers are allowed to edit those records. 
-* Rejected Merchant Report 
-    * After one checker has already rejected the records from the pending merchant records, those rejected records will appear in the “Rejected Merchant Report,” and the registration status will be changed to rejected. 
+  * After one checker has already changed the records to be reverted from the pending merchant records, those records will appear in the “To be Reverted Report,” and the registration status will be changed to reverted.
+    * Anyone in the same DFSP can edit the record.
+* Rejected Merchant Report
+  * After one checker has already rejected the records from the pending merchant records, those rejected records will appear in the “Rejected Merchant Report,” and the registration status will be changed to rejected. 
     * Rejected records cannot be done any action except export and view details. 
-    * After DFSP checker has approved/rejected the record, system will notify the results to the maker who added the records. 
-        * Notification message : " username XXX has rejected xxx records". 
+    * After DFSP checker has approved/rejected the record, system will notify the results to the maker who added the records.
+    * Notification message : " username XXX has rejected xxx records".
 
 
- ## Data Retrieval  
+## Data Retrieval
+
  **As a** DFSP checker, **I want to** review the data that is related to my DFSP **so that** I can see which records have been approved and which have been rejected and determine what to do next.  
 
- ## Acceptance Criteria 
+## Acceptance Criteria 
+
  * When the data loads, it should only display data that is relevant to the user. 
 * Determine which DFSP this user is from, and then display the data associated with that DFSP
 * all merchant records 
