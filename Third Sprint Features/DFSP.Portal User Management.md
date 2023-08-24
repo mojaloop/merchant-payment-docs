@@ -48,3 +48,8 @@
   * System will send assigned email a new email that instruct to reset password
   * New user reset password 
   * New user login to the portal with new password and start performing available actions
+
+## Design file
+
+* [Role Management](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=1435%3A7881&type=design&node-id=1435-8023&viewport=644%2C-1531%2C0.48&t=3nzJNy4MNiGvPOBV-1&scaling=scale-down&starting-point-node-id=1435%3A8023&show-proto-sidebar=1&mode=design)
+* [User Management](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=1435%3A7881&type=design&node-id=1435-13552&viewport=644%2C-1531%2C0.48&t=3nzJNy4MNiGvPOBV-1&scaling=scale-down&starting-point-node-id=1435%3A13552&show-proto-sidebar=1&mode=design)
