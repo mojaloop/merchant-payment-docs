@@ -4,6 +4,7 @@
 **As a** merchant and DFSP operator, **I want to** get save as draft feature for my work-in-progress application form **so that** I can save my progress and prevent any loss of work when my work gets interrupted. 
 
 ### Acceptance Criteria
+
 * Save work-in-progress application form as draft and reload the progress when user want to continue filling out the form.
 * When user click "save as draft" button, system ask user to confirm the action.
     * Message : " Are you sure you want to save the progress as draft?"

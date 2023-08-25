@@ -1,0 +1,56 @@
+Merchant Record
+- With each Merchant, we have the last submitted and last approved user.
+
+Audit Trail
+-------------
+1.  User M1 starts the form
+2.  User M2 submit the form for approval
+3.  User C1 reviews the form 
+4.  User C1 reverts the form
+5.  User M3 submit the form again
+
+Users
+=====
+- DFSP1
+	Maker Role
+		- DFSP1U1
+		- DFSP1U2
+		- DFSP1U3
+	Checker Role
+		- DFSP1U1
+		- DFSP1U4
+- DFSP2
+	Maker Role
+		- DFSP2U1
+		- DFSP2U2
+	Checker Role
+		- DFSP2U2
+		- DFSP2U3
+
+Maker
+- Draft		(can edit, submit)
+- Reverted	(can edit, re-submit)
+- Pending   (cannot edit)
+- Waiting for Alias (cannot edit)
+
+Checker
+- Pending			 (cannot edit but can approve, revert or reject)
+- Waiting for Alias  (cannot edit)
+
+
+Sprint 2
+--> Revert, Reject and Data Fetch flows
+--> Audit Trail
+--> Reports
+
+Sprint 3
+--> Alias Registration
+	---> Database for Registry
+		--> Registry
+		--> API level permission
+	---> Implement APIs
+		--> RegisterAlias
+
+Pending: Role based segregation based on "KeyCloak"
+
+
