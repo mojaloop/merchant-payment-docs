@@ -10,8 +10,7 @@
 * Keycloak will be used for user identity management and data access and action permission management will be done by own backend system.
 * following are the list of default roles and permission list in merchant acquiring sytem. 
   * Super Admin User  
-    * Read/write access for all reports and form
-    * write access to acqquring registry form
+    * write(create,edit) access to acqquring registry form
     * approve,reject,revert action for merchant records.
       * exception: records created by the same user CANNOT be approved by the user.
     * Read access to table of all merchant table
@@ -21,7 +20,7 @@
     * Update,Delete user records in their organization
     * merchant data export
   * Admin user
-    * write access to acqquring registry form
+    * write(create,edit) access to acqquring registry form
     * approve,reject,revert action for merchant records.
       * exception: records created by the same user CANNOT be approved by the user.
     * Read access to table of all merchant table
@@ -30,24 +29,37 @@
     * Assign new users[Operators,Auditors] to roles
     * Update,Delete user records in their organization
     * merchant data export
-* Operator  
-  * write access to acqquring registry form [can create new merchant records]
+  * Operator  
+    * write(create,edit) access to acqquring registry form [can create new merchant records]
     * approve,reject,revert action for merchant records.
-      * exception: records created by the same user CANNOT be approved by the user.
+    * exception: records created by the same user CANNOT be approved by the user.
     * Read access to table of all merchant table
     * Read access to "to-be-reverted merchants" table
     * Read access to "Pending-Merchants"table
     * merchant data export
-* Auditor  
-  * Read access to table of all merchant table
-  * Read access to "to-be-reverted merchants" table
-  * Read access to "Pending-Merchants"table
+  * Auditor  
+    * Read access to table of all merchant table
+    * Read access to "to-be-reverted merchants" table
+    * Read access to "Pending-Merchants"table
 
-* Admin/Super admin assign new users to a role by  
-  * Adding email, name and assigned role
-  * System will send assigned email a new email that instruct to reset password
-  * New user reset password 
-  * New user login to the portal with new password and start performing available actions
+## Adding new users to the system workflow
+
+* Adding email, username and assigned role in user management screen
+* System will send email from the form a new email that instruct to set password
+* New user set password and confirm password
+* New user login to the portal with new password and start performing available actions
+
+## Checking For Strong password
+
+* following creteria will be validated while user set their password for the sysytem
+  * minimum number of character : 8
+  * there must be AT LEAST one capital letter, number,special charater and small letter.
+
+## Out of scope items
+
+* editing roles and permissions
+* adding new roles
+* 2 factor authentication
 
 ## Design file
 
