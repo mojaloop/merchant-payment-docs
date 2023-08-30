@@ -2,12 +2,11 @@
 
 **As a** super admin of DFSP, **I want** to be able to assign users to different roles **so that** people from my DFSP organization can start managing merchant records.
 
-* As a defualt state, one super admin user of that DFSP users will be assigned at DFSP onboarding state.
+* As a default state, one super admin user of that DFSP users will be assigned at DFSP onboarding state.
 
 ## Acceptance Criteria 
 
 * following permissions and roles will be included in the system. 
-* Keycloak will be used for user identity management and data access and action permission management will be done by own backend system.
 * following are the list of default roles and permission list in merchant acquiring sytem. 
   * Super Admin User  
     * write(create,edit) access to acqquring registry form

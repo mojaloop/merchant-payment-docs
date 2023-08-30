@@ -1,0 +1,31 @@
+sequenceDiagram
+    participant Client as Acquirer Frontend UI Client
+    participant Backend as Acquirer Backend API
+    participant DB as Database
+
+    Client->>Backend: POST /api/v1/users/login
+    note right of Backend: Verify credentials
+    Backend->>DB: Verify with Email and Password
+    DB-->>Backend: User data
+    note right of Backend: Generate JWT with Expire Time
+    Backend->>Client: 200 OK, JWT
+    note right of Client: Store JWT locally
+
+    Note over Client,Backend: User is now authenticated and holds a JWT
+    Client->>Backend: GET /api/v1/protected_resource
+    note right of Client: Attach JWT to request Authorization bearer header
+    
+    note right of Backend: Validate JWT
+    Backend->>Backend: Decode JWT & Extract user ID
+    Backend->>DB: Fetch Role and Permissions by user ID
+    DB-->>Backend: Role and Permissions
+    Backend->>Backend: Check permissions for API route
+    alt User is Authorized
+        Backend-->>Client: 200 OK, Protected Data
+    else User is Unauthorized
+        Backend-->>Client: 403 Forbidden
+    end
+
+    Client->>Backend: POST /api/v1/users/logout
+    note right of Client: Remove locally stored JWT
+    Backend->>Client: 200 OK
