@@ -15,21 +15,21 @@
     * Read access to table of all merchant table
     * Read access to "to-be-reverted merchants" table
     * Read access to "Pending-Merchants"table
-    * Assign new users[Admin, Operators, Auditors] to roles
+    * Assign new users [Admin, Operators, Auditors] to roles
     * Update, Delete user records in their organization
     * merchant data export
   * Admin user
-    * write(create, edit) access to merchant acquiring registry form
+    * write (create, edit) access to merchant acquiring registry form
     * approve, reject, revert action for merchant records.
       * exception: records created by the same user CANNOT be approved by the user.
     * Read access to table of all merchant table
     * Read access to "to-be-reverted merchants" table
     * Read access to "Pending-Merchants"table
-    * Assign new users[Operators, Auditors] to roles
+    * Assign new users [Operators, Auditors] to roles
     * Update, Delete user records in their organization
     * merchant data export
   * Operator  
-    * write(create, edit) access to merchant acquiring registry form [can create new merchant records]
+    * write (create, edit) access to merchant acquiring registry form [can create new merchant records]
     * approve, reject, revert action for merchant records.
     * exception: records created by the same user CANNOT be approved by the user.
     * Read access to table of all merchant table
