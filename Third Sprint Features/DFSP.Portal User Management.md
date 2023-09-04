@@ -2,23 +2,22 @@
 
 **As a** super admin of DFSP, **I want** to be able to assign users to different roles **so that** people from my DFSP organization can start managing merchant records.
 
-* As a default state, one super admin user of that DFSP users will be assigned at DFSP onboarding state.
+* As a default state, one super admin user of that DFSP will be assigned at DFSP onboarding state.
 
 ## Acceptance Criteria 
 
-* following permissions and roles will be included in the system. 
-* following are the list of default roles and permission list in merchant acquiring sytem. 
-  * Super Admin User  
+* following permissions and roles will be included in the merchant acquiring system. 
+  * DFSP Super Admin User  
     * write(create, edit) access to merchant acquiring registry form
-    * approve, reject, revert action for merchant records.
+    * approve, reject, and revert action for merchant records.
       * exception: records created by the same user CANNOT be approved by the user.
     * Read access to table of all merchant table
-    * Read access to "to-be-reverted merchants" table
-    * Read access to "Pending-Merchants"table
-    * Assign new users [Admin, Operators, Auditors] to roles
-    * Update, Delete user records in their organization
+    * Read access to the "to-be-reverted merchants" table
+    * Read access to the "Pending-Merchants" table
+    * Assign new users [Admin, Operators, and Auditors to roles]
+    * Update and delete user records in their organization
     * merchant data export
-  * Admin user
+  * DFSP Admin user
     * write (create, edit) access to merchant acquiring registry form
     * approve, reject, revert action for merchant records.
       * exception: records created by the same user CANNOT be approved by the user.
@@ -26,9 +25,9 @@
     * Read access to "to-be-reverted merchants" table
     * Read access to "Pending-Merchants"table
     * Assign new users [Operators, Auditors] to roles
-    * Update, Delete user records in their organization
+    * Update, delete user records in their organization
     * merchant data export
-  * Operator  
+  * DFSP Operator  
     * write (create, edit) access to merchant acquiring registry form [can create new merchant records]
     * approve, reject, revert action for merchant records.
     * exception: records created by the same user CANNOT be approved by the user.
@@ -36,10 +35,13 @@
     * Read access to "to-be-reverted merchants" table
     * Read access to "Pending-Merchants"table
     * merchant data export
-  * Auditor  
+  * DFSP Auditor  
     * Read access to table of all merchant table
     * Read access to "to-be-reverted merchants" table
     * Read access to "Pending-Merchants"table
+  * Hub admin user
+    * Updating permissions and roles configuration
+    * Check audit log
 
 ## Adding new users to the system workflow
 
