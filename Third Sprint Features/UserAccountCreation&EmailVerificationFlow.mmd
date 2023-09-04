@@ -1,0 +1,20 @@
+graph TD;
+    A[Admin] -->|Create User Account| B[Acquirer Backend]
+    B -.->|New User Account Status: <br/> Unverified| C[Database]
+    B -->|Generate/Store Token <br/>with Short Expire Time, <br/>Status as Unused| C
+    B -->|Send Email<br/>with Verification Token| D[SendGrid Email Service]
+    D -->|Email Verification Link| E[User's Email Client]
+    E -->|Click on Verification Link <br/> <br/> /api/v1/users/verify | F[Acquirer Backend]
+    F -.->|User Status: Reset Password| C
+    F -->|Verify Token,<br/>Check Expire Time<br/> Mark Token Status as Used | C
+    F -->|Redirect User to<br/>Set Password| G[Acquirer Frontend]
+    G -->|Set Password<br/>and Confirm Password| H[Acquirer Backend]
+    H -->|User Status: Fresh <br/> <br/>Update User Account<br/>in Database| C
+    style A fill:#f9d,stroke:#333,stroke-width:2px;
+    style B fill:#fc9,stroke:#333,stroke-width:2px;
+    style C fill:#9cf,stroke:#333,stroke-width:2px;
+    style D fill:#cfc,stroke:#333,stroke-width:2px;
+    style E fill:#ccf,stroke:#333,stroke-width:2px;
+    style F fill:#fc9,stroke:#333,stroke-width:2px;
+    style G fill:#f99,stroke:#333,stroke-width:2px;
+    style H fill:#fc9,stroke:#333,stroke-width:2px;
