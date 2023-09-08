@@ -1,4 +1,10 @@
-# test
+# Alias Generation Checklist
+
+## acceptance criteria
+
+* to update oracle database
+* to create API end points that are mentioned in the powerpoint
+* to create scheduler job
 
 ## out of scope
 
