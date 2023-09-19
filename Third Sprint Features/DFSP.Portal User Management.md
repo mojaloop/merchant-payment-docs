@@ -15,7 +15,7 @@
     * Read access to the "to-be-reverted merchants" table
     * Read access to the "Pending-Merchants" table
     * Assign new users [Admin, Operators, and Auditors to roles]
-    * Update and delete user records in their organization
+    * enable/disable user records in their organization
     * merchant data export
   * DFSP Admin user
     * write (create, edit) access to merchant acquiring registry form
@@ -25,7 +25,7 @@
     * Read access to "to-be-reverted merchants" table
     * Read access to "Pending-Merchants"table
     * Assign new users [Operators, Auditors] to roles
-    * Update, delete user records in their organization
+    * enable/disable user records in their organization
     * merchant data export
   * DFSP Operator  
     * write (create, edit) access to merchant acquiring registry form [can create new merchant records]
