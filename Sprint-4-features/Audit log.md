@@ -34,4 +34,5 @@
 
 11. Proper error handling and user feedback should be implemented to inform users in case of any issues with accessing or viewing the audit log. When unauthorized user trys to access the audit log, show the error as " you do not have permission to check the audit log".
 
-## design to be added
+## Design File
+* [Audit Log](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=1435%3A7881&type=design&node-id=3401-8507&viewport=156%2C625%2C0.21&t=OSXqRfVnDkbsjz5G-1&scaling=scale-down&starting-point-node-id=3401%3A8507&show-proto-sidebar=1&mode=design)
