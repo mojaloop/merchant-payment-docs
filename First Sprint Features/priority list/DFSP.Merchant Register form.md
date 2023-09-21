@@ -56,14 +56,14 @@ As a DFSP maker, I want to register simple merchant to the acquirer system with 
       * Township [Not Required ]
       * District [Not Required ]
       * Country Subdivision(State/division) [Not Required ]//remark : state list should be reflected to chosen country 
-      * Country  [Dropdown, Required ]
+      * Country  [Dropdown, Not Required ]
       * Longitude [Not Required ]
       * Latitude [Not Required ]
     * Check out counter description[ to display in customer app/ussd] [single line, Not Required]
 * Business owner information [ group DIV name]
   * Name  
-  * National ID  
-  * Nationality [dropdown, Required ]
+  * ID Type [dropdown, Required ]
+  * Identification Number
   * Physical Address  [visual - sub group]
     * Department [Not Required ]
     * Sub Department [Not Required ]
@@ -77,7 +77,7 @@ As a DFSP maker, I want to register simple merchant to the acquirer system with 
     * Township [Not Required ]
     * District [Not Required ]
     * Country Subdivision(State/division) [Not Required ]
-    * Country  [Dropdown, Required ]
+    * Country  [Dropdown, Not Required ]
     * Longitude [Not Required ]
     * Latitude [Not Required ]
   * Phone number [phone number, Required ]
