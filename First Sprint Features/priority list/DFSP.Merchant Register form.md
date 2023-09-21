@@ -77,7 +77,7 @@ As a DFSP maker, I want to register simple merchant to the acquirer system with 
     * Township [Not Required ]
     * District [Not Required ]
     * Country Subdivision(State/division) [Not Required ]
-    * Country  [Dropdown, Required ]
+    * Country  [Dropdown, Not Required ]
     * Longitude [Not Required ]
     * Latitude [Not Required ]
   * Phone number [phone number, Required ]
