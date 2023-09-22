@@ -1,5 +1,11 @@
 # Merchant Payment user journey
 
+## QR code standard and requirements
+
+* For QR code standard, EMV Co standard will be used for MVP phase.[Decision might be revisited during next phases based on updated requirements]
+* For the existing DFSP system which are not compatible with EMV CO QR standard, solution will be generation API that can response alias value + additional attributes so that DFSP can generate their own QR code at their ends.[Future Consideration]
+
+
 ## Use case 1: By scanning QR code to pay
 
 ```mermaid
@@ -19,7 +25,7 @@ sequenceDiagram
     
     WalletA ->> ALS: Send scanned QR code data
     
-    ALS -->> MS: get/participant?type=merchant registry&aliasID=923234
+    ALS -->> MS: get/participant/merchant_registry/923234
     MS -->> ALS: Respond with wallet name "Demo Wallet B"
     
     ALS -->>Mojaloop: Respond with wallet name "Demo Wallet B"
@@ -55,10 +61,10 @@ sequenceDiagram
     Note left of WalletA: telling the ALS that oracle type will be merchant registry
     Alice ->> WalletA: Select Merchant Payment
     
-    ALS -->> MS: get/participant?type=merchant registry&aliasID=923234
+    ALS -->> MS: get/participant/merchant_registry/923234
     MS -->> ALS: Respond with wallet name "Demo Wallet B"
     ALS -->>Mojaloop: Respond with wallet name "Demo Wallet B"
-    ALS -->>WalletB: get/party?aliasID=923234
+    ALS -->>WalletB: get/party/aliasID=923234
     WalletB -->>WalletA: alias ID 923234 belongs to merchant Bob
 
     Alice -->> WalletA: I will send 50 USD to Bob
