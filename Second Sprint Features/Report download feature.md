@@ -11,5 +11,4 @@
 ## Acceptance Criteria
 
 * reports should be downloadable by following formats
-  * csv
   * excel
