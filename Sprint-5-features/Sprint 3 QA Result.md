@@ -1,4 +1,4 @@
-# Bug lists to fix form sprint 3 QA results
+## Bug lists to fix form sprint 3 QA results
 
 
 * “Reset Password” api shouldn’t allow users to create a password that is less than 8 characters.
