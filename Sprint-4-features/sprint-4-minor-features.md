@@ -17,3 +17,12 @@
 ## adding maker username in merchant table
 
 * adding maker names can help users to check which records they should check and approve, without knowing record maker, they might waste time by checking the records when they don't have permission to give approval or rejection.
+
+## Minor Changes
+
+* In the merchant report table, “STATE” column is removed and “TOWN” column is added.
+* Unnecessary checkboxes are removed from all merchant records table, reverted report table, rejected merchant table and approved merchant table. 
+* In the pending merchant table, the checkboxes for the rows that the maker made are disabled to prevent checking the records he has updated.
+* If a user opens a new tab after having already logged into the merchant payment portal in one tab, he shouldn't have to do it again.
+* Additionally, if a user opens two tabs for a merchant payment portal and logs in to one of them, the other tab needs to right away log in as well.
+
