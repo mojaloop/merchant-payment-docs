@@ -25,4 +25,3 @@
 * In the pending merchant table, the checkboxes for the rows that the maker made are disabled to prevent checking the records he has updated.
 * If a user opens a new tab after having already logged into the merchant payment portal in one tab, he shouldn't have to do it again.
 * Additionally, if a user opens two tabs for a merchant payment portal and logs in to one of them, the other tab needs to right away log in as well.
-
