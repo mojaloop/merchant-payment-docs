@@ -1,4 +1,4 @@
-# Revert record Feature
+# Back and Update Record Feature
 
 As a DFSP maker, I want to click back button while filling out the form and edit the previous page in case I want to edit the fields from previous while filling out the page or from review submission stage.
 
