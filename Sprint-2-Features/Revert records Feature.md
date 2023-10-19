@@ -14,4 +14,5 @@ As a DFSP maker, I want to continue to fill out the revert form applications by 
 * After resubmitting the form, the other users who do not make final submission of the form can check the form and continue the approval process.
 
 ## Design File
-* [To be reverted report](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=1435%3A7881&type=design&node-id=2121-8001&viewport=417%2C2269%2C0.3&t=ez5lM4RJzlmH2YfI-1&scaling=scale-down&starting-point-node-id=2121%3A8001&show-proto-sidebar=1&mode=design)
+
+* [save_as_draft_merchant_records_table](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=1435%3A7881&type=design&node-id=1865-10059&viewport=417%2C2269%2C0.3&t=JLfMpLlDsQxIs2Um-1&scaling=scale-down&starting-point-node-id=1865%3A10059&show-proto-sidebar=1)

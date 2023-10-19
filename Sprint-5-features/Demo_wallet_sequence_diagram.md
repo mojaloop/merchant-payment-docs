@@ -25,7 +25,7 @@ sequenceDiagram
     
     WalletA ->> ALS: Send scanned QR code data
     
-    ALS -->> MS: get/participant/merchant_registry/923234
+    ALS -->> MS: GET /participants/MERCHANT_PAYINTOID/0003221
     MS -->> ALS: Respond with wallet name "Demo Wallet B"
     
     ALS -->>Mojaloop: Respond with wallet name "Demo Wallet B"
@@ -61,7 +61,7 @@ sequenceDiagram
     Note left of WalletA: telling the ALS that oracle type will be merchant registry
     Alice ->> WalletA: Select Merchant Payment
     
-    ALS -->> MS: get/participant/merchant_registry/923234
+    ALS -->> MS: GET /participants/MERCHANT_PAYINTOID/0003221
     MS -->> ALS: Respond with wallet name "Demo Wallet B"
     ALS -->>Mojaloop: Respond with wallet name "Demo Wallet B"
     ALS -->>WalletB: get/party/aliasID=923234

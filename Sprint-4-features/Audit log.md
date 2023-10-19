@@ -1,6 +1,6 @@
 # User Story
 
-**As an auditor, super admin user, or admin user** , **I want to** be able to access the audit log for a specific DFSP (Digital Financial Service Provider) and view a table containing records of actions sorted by the latest updated time. The table should display various attributes for each record, including portal user name, action type, application module, event description, entity name, old value (truncated), new value (truncated), and the timestamp when the action was created.
+**As an auditor, super admin user, or admin user** , **I want to** be able to access the audit log for a specific DFSP (ie, DFSP of login user) and view a table containing records of actions sorted by the latest updated time. The table should display various attributes for each record, including portal user name, action type, application module, event description, entity name, old value (truncated), new value (truncated), and the timestamp when the action was created.
 
 ## Acceptance Criteria:
 
@@ -28,7 +28,7 @@
 
 8. Users should be able to paginate through the audit log table if there are a large number of records.
 
-9. The audit log should capture and display records for all relevant actions and events within the selected DFSP, ensuring that the log is comprehensive and up-to-date.
+9. The audit log should capture and display records for all relevant actions and events within the selected DFSP which is DFSP of login user, ensuring that the log is comprehensive and up-to-date.[ users who are outside of particular DFSP SHOULDN'T BE able to access audit log of that DFSP]
 
 10. The audit log should be accessible only to authorized auditor, super admin, and admin users, and proper authentication and authorization mechanisms should be in place to enforce this access control.
 
