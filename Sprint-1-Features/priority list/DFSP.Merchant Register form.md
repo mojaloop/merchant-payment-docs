@@ -1,6 +1,6 @@
 # Simple merchant registration 
 ## Registration Form 
-As a DFSP maker, I want to register simple merchant to the acquirer system with 2 methods [ single form input or bulk input by excel file] so that its data can be transferred to registry system and generate alias. 
+**As a** DFSP maker, **I want to** register simple merchant to the acquirer system with 2 methods [ single form input or bulk input by excel file] **so that** its data can be transferred to registry system and generate alias. 
 
 ## Acceptance Criteria
 
@@ -99,3 +99,27 @@ As a DFSP maker, I want to register simple merchant to the acquirer system with 
 ## Design file
 
 * [registration form](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=1435%3A7881&type=design&node-id=1435-15900&viewport=528%2C298%2C0.35&t=3AEfehrhNBILWl7q-1&scaling=scale-down&starting-point-node-id=1517%3A10353&show-proto-sidebar=1&mode=design)
+
+## Done
+ * Acceptance Criteria pass 
+ * Designs are up-to date 
+ * Code Style & Coverage meets standards 
+ * QA pass 
+ * Unit Tests [Not Yet]
+ * Integration Tests [Not Yet] 
+ * Changes made to config (default.json) are broadcast to team and follow-up tasks added to update helm charts and other deployment config. [Not Yet]
+
+
+## Follow-up 
+ * N/A 
+
+  
+
+## Dependencies
+ * N/A 
+
+  
+## Accountability
+ * Owner: Si Thu Myo, Naing Linn Khant
+ * QA: Hsu Yee Mon, Phyu Sin Myat  
+ * Review: Karim

@@ -23,3 +23,27 @@
 
 ## Design File
 * [view_records](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=1435%3A7881&type=design&node-id=1435-8023&viewport=528%2C298%2C0.35&t=3AEfehrhNBILWl7q-1&scaling=scale-down&starting-point-node-id=1435%3A8023&show-proto-sidebar=1)
+
+
+## Done
+ * Acceptance Criteria pass 
+ * Designs are up-to date 
+ * Code Style & Coverage meets standards 
+ * QA pass 
+ * Unit Tests [Not Yet]
+ * Integration Tests [Not Yet] 
+ * Changes made to config (default.json) are broadcast to team and follow-up tasks added to update helm charts and other deployment config. [Not Yet]
+
+
+## Follow-up 
+ * N/A 
+  
+
+## Dependencies
+ * N/A 
+
+  
+## Accountability
+ * Owner: Si Thu Myo, Naing Linn Khant
+ * QA: Hsu Yee Mon, Phyu Sin Myat  
+ * Review: Karim
