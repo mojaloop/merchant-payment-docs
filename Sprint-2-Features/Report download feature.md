@@ -14,7 +14,7 @@
   * excel
 
 
-## Done
+### Done
  * Acceptance Criteria pass 
  * Designs are up-to date 
  * Code Style & Coverage meets standards 
@@ -24,15 +24,15 @@
  * Changes made to config (default.json) are broadcast to team and follow-up tasks added to update helm charts and other deployment config. [Not Yet]
 
 
-## Follow-up 
+### Follow-up 
  * N/A 
   
 
-## Dependencies
+### Dependencies
  * N/A 
 
   
-## Accountability
+### Accountability
  * Owner: Si Thu Myo, Naing Linn Khant
  * QA: Hsu Yee Mon, Phyu Sin Myat  
  * Review: Karim

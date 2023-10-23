@@ -100,7 +100,7 @@
 
 * [registration form](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=1435%3A7881&type=design&node-id=1435-15900&viewport=528%2C298%2C0.35&t=3AEfehrhNBILWl7q-1&scaling=scale-down&starting-point-node-id=1517%3A10353&show-proto-sidebar=1&mode=design)
 
-## Done
+### Done
  * Acceptance Criteria pass 
  * Designs are up-to date 
  * Code Style & Coverage meets standards 
@@ -110,16 +110,15 @@
  * Changes made to config (default.json) are broadcast to team and follow-up tasks added to update helm charts and other deployment config. [Not Yet]
 
 
-## Follow-up 
+### Follow-up 
+ * N/A 
+  
+
+### Dependencies
  * N/A 
 
   
-
-## Dependencies
- * N/A 
-
-  
-## Accountability
+### Accountability
  * Owner: Si Thu Myo, Naing Linn Khant
  * QA: Hsu Yee Mon, Phyu Sin Myat  
  * Review: Karim

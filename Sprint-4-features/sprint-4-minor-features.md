@@ -25,3 +25,26 @@
 * In the pending merchant table, the checkboxes for the rows that the maker made are disabled to prevent checking the records he has updated.
 * If a user opens a new tab after having already logged into the merchant payment portal in one tab, he shouldn't have to do it again.
 * Additionally, if a user opens two tabs for a merchant payment portal and logs in to one of them, the other tab needs to right away log in as well.
+
+### Done
+ * Acceptance Criteria pass 
+ * Designs are up-to date 
+ * Code Style & Coverage meets standards 
+ * QA pass 
+ * Unit Tests [Not Yet]
+ * Integration Tests [Not Yet] 
+ * Changes made to config (default.json) are broadcast to team and follow-up tasks added to update helm charts and other deployment config. [Not Yet]
+
+
+### Follow-up 
+ * N/A 
+  
+
+### Dependencies
+ * N/A 
+
+  
+### Accountability
+ * Owner: Si Thu Myo, Naing Linn Khant
+ * QA: Hsu Yee Mon, Phyu Sin Myat  
+ * Review: Karim
