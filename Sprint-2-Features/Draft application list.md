@@ -18,3 +18,26 @@ As a DFSP maker, I want to continue to fill out the draft applications by select
 ## Design File
 
 * [save_as_draft_merchant_records_table](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=1435%3A7881&type=design&node-id=1865-10059&viewport=417%2C2269%2C0.3&t=JLfMpLlDsQxIs2Um-1&scaling=scale-down&starting-point-node-id=1865%3A10059&show-proto-sidebar=1)
+
+## Done
+ * Acceptance Criteria pass 
+ * Designs are up-to date 
+ * Code Style & Coverage meets standards 
+ * QA pass 
+ * Unit Tests [Not Yet]
+ * Integration Tests [Not Yet] 
+ * Changes made to config (default.json) are broadcast to team and follow-up tasks added to update helm charts and other deployment config. [Not Yet]
+
+
+## Follow-up 
+ * N/A 
+  
+
+## Dependencies
+ * N/A 
+
+  
+## Accountability
+ * Owner: Si Thu Myo, Naing Linn Khant
+ * QA: Hsu Yee Mon, Phyu Sin Myat  
+ * Review: Karim
