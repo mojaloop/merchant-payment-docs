@@ -1,8 +1,8 @@
 # User Story
 
-- As a DFSP user, I want to register merchants with multiple locations and multiple checkout counters in the merchant acquiring system portal so that those merchants can also be a part of the payment system.
+As a DFSP user, I want to register merchants with multiple locations and multiple checkout counters in the merchant acquiring system portal so that those merchants can also be a part of the payment system.
 
-Acceptance Criteria:
+## Acceptance Criteria
 
 - When I log in to the merchant acquiring portal, I should have the option to register a new merchant.
 - While registering a merchant, I should be able to provide information about multiple locations for that merchant, including the location name, address, and other relevant details in ISO format.
