@@ -66,7 +66,7 @@ The Mojaloop's Account Lookup Service will interact with the merchant registry a
 * Connecting with Keycloak, mojaloop authentication and authorization methods
 Bulk data input in merchant acquiring system
 
-### ERD Design
+
 ![ERD Design](./Entity-Relations-Diagram.png)
 
 
