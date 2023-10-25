@@ -14,3 +14,8 @@ As a DFSP user, I want to register merchants with multiple locations and multipl
 - If a location has no checkout counters, it should be clearly indicated in the system from user interface.
 - The alias for each checkout counter should be displayed and stored alongside the checkout counter's ID in the system.
 - The system should ensure that each checkout counter's alias is unique and not duplicated.
+
+
+## Design File
+
+* [Multiple Locations and multiple checkout counters](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=1435%3A7881&type=design&node-id=3663-8749&viewport=519%2C-1549%2C0.31&t=wzFeipODQ4szM44X-1&scaling=scale-down&starting-point-node-id=3663%3A8749&show-proto-sidebar=1&mode=design)
