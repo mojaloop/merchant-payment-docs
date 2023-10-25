@@ -25,7 +25,7 @@ sequenceDiagram
     
     WalletA ->> ALS: Send scanned QR code data
     
-    ALS -->> MS: get/participant/merchant_registry/923234
+    ALS -->> MS: GET /participants/MERCHANT_PAYINTOID/0003221
     MS -->> ALS: Respond with wallet name "Demo Wallet B"
     
     ALS -->>Mojaloop: Respond with wallet name "Demo Wallet B"
@@ -61,7 +61,7 @@ sequenceDiagram
     Note left of WalletA: telling the ALS that oracle type will be merchant registry
     Alice ->> WalletA: Select Merchant Payment
     
-    ALS -->> MS: get/participant/merchant_registry/923234
+    ALS -->> MS: GET /participants/MERCHANT_PAYINTOID/0003221
     MS -->> ALS: Respond with wallet name "Demo Wallet B"
     ALS -->>Mojaloop: Respond with wallet name "Demo Wallet B"
     ALS -->>WalletB: get/party/aliasID=923234
@@ -75,3 +75,26 @@ sequenceDiagram
     Bob -->>WalletB: Check payment history
     WalletB -->>Bob: Alice has sent you 50 USD on 12:34 AM 23/12/2023.
 ```
+
+### Done
+ * Acceptance Criteria pass 
+ * Designs are up-to date 
+ * Code Style & Coverage meets standards 
+ * QA pass 
+ * Unit Tests [Not Yet]
+ * Integration Tests [Not Yet] 
+ * Changes made to config (default.json) are broadcast to team and follow-up tasks added to update helm charts and other deployment config. [Not Yet]
+
+
+### Follow-up 
+ * N/A 
+  
+
+### Dependencies
+ * N/A 
+
+  
+### Accountability
+ * Owner: Si Thu Myo, Naing Linn Khant
+ * QA: Hsu Yee Mon, Phyu Sin Myat  
+ * Review: Karim
