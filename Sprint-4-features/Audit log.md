@@ -1,4 +1,4 @@
-# User Story
+# Audit Log
 
 **As an auditor, super admin user, or admin user** , **I want to** be able to access the audit log for a specific DFSP (ie, DFSP of login user) and view a table containing records of actions sorted by the latest updated time. The table should display various attributes for each record, including portal user name, action type, application module, event description, entity name, old value (truncated), new value (truncated), and the timestamp when the action was created.
 
