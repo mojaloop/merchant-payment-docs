@@ -16,6 +16,8 @@
 - Super admin user creation should follow standard security practices, including password requirements and email validation.
 
 - The system should support user account activation for newly created super admin users and any other users following the existing activation flow.
+- [Adding new users to the system workflow](https://github.com/mojaloop/merchant-payment-docs/blob/main/Sprint-3-Features/DFSP.Portal%20User%20Management.md#adding-new-users-to-the-system-workflow)
+- [Checking For Strong password](https://github.com/mojaloop/merchant-payment-docs/blob/main/Sprint-3-Features/DFSP.Portal%20User%20Management.md#checking-for-strong-password)
 
 - User account activation should ensure that the new super admin user is properly authenticated.
 
