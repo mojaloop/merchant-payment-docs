@@ -6,6 +6,18 @@
 
 - A user account creation process is implemented for merchants to control their registration processes, with one user account tied to one merchant.
 
+- On the register page, to add Google Re-captcha (this is just to stop any bot-type attacks)
+- First step when the merchant is trying to apply the system will check
+  - No merchant is already there with the same email
+  - No merchant registration request is pending with the same email
+- If these checks pass then
+  - Merchant registration application is stored with "Verification Status = Pending"  (this will be separated from Merchant records which we have now)
+  - Merchant verified using OTP on email and then they are "Activated"
+- Now Merchant will submit the application
+  - 1 Merchant can submit one application only.
+- If merchant's application is not fully submitted or partially submitted, they can come again to complete it.
+- If merchant's application is pending review, and they login, they will see the status "DFSP Reviewing Stage" and QR or Alias won't be displayed.
+
 - To create a portal user account, the following information will be collected:
   - Name
   - Option to select either an email or phone number for registration.
