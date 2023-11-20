@@ -23,7 +23,6 @@
   - Option to select either an email or phone number for registration.
   - Password and confirmation of the password.
 
-
 - It is required that the phone number or email used during registration be unique.
 - For the initial implementation, email verification will be the sole verification method. SMS OTP verification is excluded due to potential complexity variations in different countries.
 - After signing up on the portal, account activation will be required via an email confirmation process.

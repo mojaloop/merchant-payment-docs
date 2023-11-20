@@ -5,18 +5,27 @@
 ## Acceptance Criteria
 
 - When onboarding a new DFSP, the following information will be requested:
+  - DFSP ID [which will also need to be captured and this should be the same as the DFSP ID used in Mojaloop.]
   - DFSP Name
   - DFSP Business License ID
-  - Super Admin User Information
+  - Super Admin Maker User 1 Information
+    - Name
+    - Phone Number
+    - Email
+  - Super Admin Maker User 2 Information
     - Name
     - Phone Number
     - Email
   - Business Logo (image file)
   - Whether the DFSP will use the Mojaloop Merchant Acquiring Portal (Yes/No)
+- A single user can have both DFSP Admin Maker and Admin checker role but can't approve the activity which she/he does. 
+
+- After one hub admin user add new DFSP, it will appear in checker's pending approval section. After checker approves the request, DFSP will be successfully onboarded. 
 
 - After successfully adding a new DFSP, the DFSP will be automatically activated in the system.
 - If the DFSP will use the Mojaloop Merchant Acquiring System, first super admin user will receive account activation email where she/he can activate their account and set the password.
 - If the DFSP is not using the Mojaloop Merchant Acquiring System, an API key will be generated for the ALIAS registration process.
+
 - All actions related to onbording DFSP should be logged and audited for accountability and security monitoring.
   - onboarding new DFSP (who, when, which DFSP)
   - new user added ( by which user,added which user)
