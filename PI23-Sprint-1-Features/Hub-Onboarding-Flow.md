@@ -40,7 +40,7 @@
     - Status Transitions:
       - Active to Inactive: Users can be temporarily disabled.
       - Inactive to Block: Users can be permanently disabled.
-     - Active to Block: Users can be directly blocked.
+      - Active to Block: Users can be directly blocked.
       - Inactive to Active: Users can be reactivated after being temporarily disabled.
 - Hub admin users should have the ability to view all merchant records, inclusive of filter options.
 - However, they are restricted from performing any updates, edits, or modifications to the displayed data.
