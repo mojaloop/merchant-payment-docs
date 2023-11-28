@@ -8,7 +8,6 @@
 - By Default we will have a "Default Super Admin" user who is assigned a role "Super Admin" and that role can only create 3 users with "Hub Admin Maker" or "Hub Admin Checker" role with the following information:
   - Name
   - Email address.
-  - Password.
   - listing down pre-configured Roles in the system
 
 - Hub operator pre-configured roles

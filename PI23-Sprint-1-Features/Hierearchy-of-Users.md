@@ -6,7 +6,7 @@ The creation of each of the Super Users should be supported by a documented appr
 
 ## Super Users  
 
-Once a Super User has been created, they can create only create three Hub admin accounts. Once three Hub Admin accounts have been created, the SuperUser is disabled
+Once a Super User has been created, they can create only three Hub admin accounts. Once three Hub Admin accounts have been created, the SuperUser is disabled
 
 ## Hub Admin Users
 
@@ -39,9 +39,6 @@ flowchart TD
     HA3-->|can create|DS2SU
  
 ```
-## DFSP Super Users
-
-Once a DFPS Super User has been created, they can create only create three DFSP admin accounts. Once three DFSP Admin accounts have been created, the DFSP SuperUser is disabled
 
 ## DFSP Admin Users
 
