@@ -9,6 +9,10 @@
   - Name
   - Email address.
   - listing down pre-configured Roles in the system
+- System will send email from the form a new email that instruct to set password
+- New user set password and confirm password
+- New user login to the portal with new password and start performing available actions
+
 
 - Hub operator pre-configured roles
   - Super admin
