@@ -19,3 +19,7 @@
 ## Further Improvements
 - For existing merchants, the system should support DFSP change requests, allowing them flexibility in choosing their financial service provider.
 - Medium and large merchants should have the option to add new checkout counters and provide location information for enhanced operational flexibility.
+
+
+## Design File
+* [Merchant Self Registry](https://www.figma.com/proto/sEFusJJ4pQedgXvfRixE7b/Merchant-Registry-Prototype?page-id=3829%3A43204&type=design&node-id=3829-43205&viewport=-1186%2C-688%2C0.48&t=pF8MCoLm5yaB6VEj-1&scaling=scale-down&starting-point-node-id=3829%3A43205&show-proto-sidebar=1&mode=design)
