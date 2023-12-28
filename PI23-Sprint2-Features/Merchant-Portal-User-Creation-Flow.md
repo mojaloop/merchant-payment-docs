@@ -13,10 +13,6 @@
 - If these checks pass then
   - Merchant registration application is stored with "Verification Status = Pending"  (this will be separated from Merchant records which we have now)
   - Merchant verified using OTP on email and then they are "Activated"
-- Now Merchant will submit the application
-  - 1 Merchant can submit one application only.
-- If merchant's application is not fully submitted or partially submitted, they can come again to complete it.
-- If merchant's application is pending review, and they login, they will see the status "DFSP Reviewing Stage" and QR or Alias won't be displayed.
 
 - To create a portal user account, the following information will be collected:
   - Name
@@ -32,6 +28,7 @@
   - Choose their preferred DFSP from a drop-down menu.
   - Check the status of their registration application.
   - Continue working on draft application functions, allowing them to complete their registration in a step-by-step manner.
+  - For more details, please check "Merchant Self Registry" Requirement document.  
 - A single application is permitted for each merchant.
 
 ## Design File
