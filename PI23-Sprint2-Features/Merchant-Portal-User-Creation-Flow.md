@@ -7,20 +7,21 @@
 - A user account creation process is implemented for merchants to control their registration processes, with one user account tied to one merchant.
 
 - On the register page, to add Google Re-captcha (this is just to stop any bot-type attacks)
-- First step when the merchant is trying to apply the system will check
+- First step when the merchant is trying to apply, the system will check
   - No merchant is already there with the same email
   - No merchant registration request is pending with the same email
 - If these checks pass then
   - Merchant registration application is stored with "Verification Status = Pending"  (this will be separated from Merchant records which we have now)
-  - Merchant verified using OTP on email and then they are "Activated"
+  - Merchant verified using OTP on email or SMS and then they are "Activated"
 
+- SMS OTP verification
+  - For a merchant who is not signed up with any DFSP and registering for the first time. In the verification step, we are verifying via email however for the SMS-based OTP, we will leave the code stub so any specific country can implement it as per the SMS gateway available to them.
 - To create a portal user account, the following information will be collected:
   - Name
   - Option to select either an email or phone number for registration.
   - Password and confirmation of the password.
 
 - It is required that the phone number or email used during registration be unique.
-- For the initial implementation, email verification will be the sole verification method. SMS OTP verification is excluded due to potential complexity variations in different countries.
 - After signing up on the portal, account activation will be required via an email confirmation process.
 
 - Once the account is activated, 
