@@ -16,6 +16,8 @@
 
 - SMS OTP verification
   - For a merchant who is not signed up with any DFSP and registering for the first time. In the verification step, we are verifying via email however for the SMS-based OTP, we will leave the code stub so any specific country can implement it as per the SMS gateway available to them.
+- The OTP generated will be at least 6 digits and valid for a specific duration (e.g. 5 minutes fixed for this version). and the system will also keep a track if anyone puts wrong OTP "x" times (we can keep this parameterized) then further attempt is not allowed for some time from same email (3 hours)
+
 - To create a portal user account, the following information will be collected:
   - Name
   - Option to select either an email or phone number for registration.
