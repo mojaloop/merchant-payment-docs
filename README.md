@@ -7,6 +7,9 @@ The Merchant Registry serves as a centralized repository, storing vital data on 
 When a consumer initiates a payment, Mojaloop's Account Lookup Service interacts with the Merchant Registry, identifying if that merchant exist in the system and associated DFSP. This information is relayed to the payer DFSP and the rest of the payment transaction workflow follow.
 
 
+![Merchant](https://github.com/mojaloop/merchant-payment-docs/assets/145109675/303ebd5b-f38f-4293-ad8c-953ac2cbd129)
+
+
 ## Key Features:
 
 * Merchant Management:
