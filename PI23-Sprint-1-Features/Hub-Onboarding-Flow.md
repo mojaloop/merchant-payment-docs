@@ -38,12 +38,12 @@
   - cannot create any new user with "Super Admin Role"
   - update the status of users they have created, with available status options including:
     - **Active**: Representing a normal operational status.
-    - **Inactive**: Temporarily disabling user access.
+    - **Disable**: Temporarily disabling user access.
     - **Block**: Permanently disabling user access.
     - Status Transitions:
-      - Active to Inactive: Users can be temporarily disabled.
-      - Inactive to Block: Users can be permanently disabled.
+      - Active to Disable: Users can be temporarily disabled.
+      - Disable to Block: Users can be permanently disabled.
       - Active to Block: Users can be directly blocked.
-      - Inactive to Active: Users can be reactivated after being temporarily disabled.
+      - Disable to Active: Users can be reactivated after being temporarily disabled.
 - Hub admin users should have the ability to view all merchant records, inclusive of filter options.
 - However, they are restricted from performing any updates, edits, or modifications to the displayed data.

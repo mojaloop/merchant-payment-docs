@@ -5,8 +5,8 @@
 ## Acceptance Criteria
 
 - When onboarding a new DFSP, the following information will be requested:
-  - DFSP ID [Dropdown, which will also need to be captured and this should be the same as the DFSP ID used in Mojaloop.]
-  - DFSP Name
+  - DFSP Name [Text field, which should be the same as the DFSP ID used in Mojaloop hub.]
+  - DFSP Type
   - DFSP Business License ID
   - Business Logo (image file)
   - Whether the DFSP will use the Mojaloop Merchant Acquiring Portal (Yes/No)
