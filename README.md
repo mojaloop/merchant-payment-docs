@@ -48,7 +48,7 @@ When a consumer initiates a payment, Mojaloop's Account Lookup Service interacts
 * Introduction of 2-Factor Authentication in the merchant acquiring system portal
 * Integration with Keycloak, Mojaloop authentication, and authorization methods
 * Implementation of bulk data input in the merchant acquiring system
-* Integration DFSP list with API from Mojaloop hub in the DFSP onboarding
+* Integration of the DFSP list with an API from Mojaloop Hub in the DFSP onboarding process instead of adding a text field for the DFSP name.
 
 ## In Pipeline:
 * Self-registration for new merchants on the portal
